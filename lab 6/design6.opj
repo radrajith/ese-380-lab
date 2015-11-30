@@ -1,0 +1,27 @@
+(ExpressProject "Design2"
+  (ProjectVersion "19981106")
+  (ProjectType "PCB")
+  (Folder "Design Resources"
+    (Folder "Library")
+    (NoModify)
+    (File "..\..\design2.dsn"
+      (Type "Schematic Design")
+      (DisplayName "..\..\design2.dsn"))
+    (BuildFileAddedOrDeleted "x")
+    (CompileFileAddedOrDeleted "x")
+    (Board_sim_option "VHDL_flow"))
+  (Folder "Outputs")
+  (Folder "Referenced Projects")
+  (PartMRUSelector)
+  (GlobalState
+    (FileView
+      (Path "Design Resources")
+      (Select "Design Resources"
+         "c:\users\radra_000\box sync\college sophomore fall 2014\fall 2014 notes and files\design2.dsn"))
+    (HierarchyView)
+    (Doc
+      (Type "COrCapturePMDoc")
+      (Frame
+        (Placement "44 2 3 -1 -1 -8 -31 0 200 0 327"))
+      (Tab 0)))
+  (MPSSessionName "radra_000"))

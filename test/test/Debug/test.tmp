@@ -1,0 +1,35 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.52</VERSION>
+ <DEVICE>"ATmega16"</DEVICE>
+ <WORKING_DIR>C:\Users\radra_000\Desktop\Box Sync\college sophomore fall 2014 (radrajith@gmail.com)\fall 2014 notes and files\ese 380 lab\test\test\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.39.1005\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\radra_000\Desktop\Box Sync\college sophomore fall 2014 (radrajith@gmail.com)\fall 2014 notes and files\ese 380 lab\test\test\test.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.39.1005\avrassembler\Include\m16def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\radra_000\Desktop\Box Sync\college sophomore fall 2014 (radrajith@gmail.com)\fall 2014 notes and files\ese 380 lab\test\test\Debug/test.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>test.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>test.map</FILE>
+  <FILE>test.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <myspl><FILE>C:\Users\radra_000\Desktop\Box Sync\college sophomore fall 2014 (radrajith@gmail.com)\fall 2014 notes and files\ese 380 lab\test\test\test.asm</FILE><LINE>91</LINE></myspl>
+  <mysph><FILE>C:\Users\radra_000\Desktop\Box Sync\college sophomore fall 2014 (radrajith@gmail.com)\fall 2014 notes and files\ese 380 lab\test\test\test.asm</FILE><LINE>93</LINE></mysph>
+  <mystack><FILE>C:\Users\radra_000\Desktop\Box Sync\college sophomore fall 2014 (radrajith@gmail.com)\fall 2014 notes and files\ese 380 lab\test\test\test.asm</FILE><LINE>95</LINE></mystack>
+  <reset><FILE>C:\Users\radra_000\Desktop\Box Sync\college sophomore fall 2014 (radrajith@gmail.com)\fall 2014 notes and files\ese 380 lab\test\test\test.asm</FILE><LINE>99</LINE></reset>
+  <start><FILE>C:\Users\radra_000\Desktop\Box Sync\college sophomore fall 2014 (radrajith@gmail.com)\fall 2014 notes and files\ese 380 lab\test\test\test.asm</FILE><LINE>142</LINE></start>
+  <mypushdown><FILE>C:\Users\radra_000\Desktop\Box Sync\college sophomore fall 2014 (radrajith@gmail.com)\fall 2014 notes and files\ese 380 lab\test\test\test.asm</FILE><LINE>105</LINE></mypushdown>
+  <mypopup><FILE>C:\Users\radra_000\Desktop\Box Sync\college sophomore fall 2014 (radrajith@gmail.com)\fall 2014 notes and files\ese 380 lab\test\test\test.asm</FILE><LINE>124</LINE></mypopup>
+  <main_loop><FILE>C:\Users\radra_000\Desktop\Box Sync\college sophomore fall 2014 (radrajith@gmail.com)\fall 2014 notes and files\ese 380 lab\test\test\test.asm</FILE><LINE>160</LINE></main_loop>
+  <pushloop><FILE>C:\Users\radra_000\Desktop\Box Sync\college sophomore fall 2014 (radrajith@gmail.com)\fall 2014 notes and files\ese 380 lab\test\test\test.asm</FILE><LINE>166</LINE></pushloop>
+  <poploop><FILE>C:\Users\radra_000\Desktop\Box Sync\college sophomore fall 2014 (radrajith@gmail.com)\fall 2014 notes and files\ese 380 lab\test\test\test.asm</FILE><LINE>178</LINE></poploop>
+ </LABELS>
+</ASSEMBLER_INFO>

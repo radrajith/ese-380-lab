@@ -1,0 +1,1227 @@
+
+AVRASM ver. 2.1.52  C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab10\evm1c\evm1c\evm1c.asm Tue Nov 11 20:07:17 2014
+
+C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab10\evm1c\evm1c\evm1c.asm(29): Including file 'C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.39.1005\avrassembler\Include\m16def.inc'
+C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab10\evm1c\evm1c\evm1c.asm(314): Including file 'C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab10\evm1c\evm1c\lcd_dog_asm_driver_m16A.inc'
+C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab10\evm1c\evm1c\evm1c.asm(599): warning: Register r18 already defined by the .DEF directive
+C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab10\evm1c\evm1c\evm1c.asm(600): warning: Register r19 already defined by the .DEF directive
+                 
+                 
+                  * evm1c.asm
+                 
+                  *
+                  ; This program will continuously read the voltage values coming in through
+                  ; port a pin 4, it will convert the analog signal to a digital signal. This 
+                  ; all done by processor, only initialization of the adc converters are required. 
+                  ; the converterted value 10 bit value is then sent to multiply with 50 and then 
+                  ; divide subroutine to divide by 10. Both of these subrouitnes are provided by atmel 
+                  ; the value obtained is then unpacked and displayed on the display. the process is '
+                  ; repeated forever. The only thing different about this program compared to the first 
+                  ; is that this will utilize an external interrupt to toggle between run and hold. 
+                  ; when its in run mode the code will read the input analog voltage. when its in hold 
+                  ; mode it will retain the value, and doesnt read again until the pbsw is pressed again.
+                  ; registers used by code written by me
+                  ; r1 - r5 to unpack the bits
+                  ; r8 and r9 to copy the 10 bit value obtained after convertion
+                  ; r16 for general purpose like initilization etc
+                  ; r17 as a space counter used in the display subroutine
+                  ; r28 initialized to 6. to keep r17 in check 
+                  ; r27 as a toggle register. changes between 1 or 0 with press of center button 
+                  ;r8 and r9 will be used to store the adc conversion values
+                  *  Created: 10/29/2014 2:17:13 PM
+                  *   Author: radra_000
+                  */
+                  
+                  
+                 .LIST 
+                 
+                 
+                  ;********************************************************************
+                 	 .cseg 
+                 	 .org 0								;reset/restart code entry point <<<<<<<< 
+000000 940c 0002 	 jmp reset	
+                 	 
+                 	 
+                 	 
+                 	 //when the counter is equal to 1s, the interrupt will be called
+                 	 //0x0E is the adress for timer compare match B. 
+                 	 //when the interrupt is called, it will jump to isr_tc0_display
+                 	//.org 0x002							;when external interrupt is pressed
+                 	//jmp switch							;its located on pd2
+                 
+                 	// .org 0x01C							; timer intrrupt
+                 	// jmp conv_check				;goes here when the time is up
+                 
+                 
+                 reset:
+000002 e50f      	ldi r16, low(ramend)
+000003 bf0d      	out spl, r16
+000004 e004      	ldi r16, high(ramend)
+000005 bf0e      	out sph, r16						;initialize stack pointer
+000006 e003      	LDI r16,$03
+000007 bf05      	out mcucr, r16
+000008 e400      	ldi r16, 1 << INT0
+000009 bf0b      	out gicr, r16
+00000a e000      	ldi r16, $00
+00000b bb01      	out ddrd, r16						;set up the port b as inputs to read the pbsw values
+                 										; and nand gate input on pd(2)
+                 
+00000c ef0f      	ldi r16, 0xff						; set portB = output.
+00000d bb02      	out portd, r16
+00000e bb07          out DDRB, r16						; for lcd display
+00000f 9ac4          sbi portB, 4					   	; set /SS of DOG LCD = 1 (Deselected)1
+                 
+000010 e001      	ldi r16, 1							; set DDRC for all in but PC0
+000011 bb04      	out DDRC, r16
+000012 9aa8      	sbi PortC, 0						; turn off sounder
+                 
+000013 e400      	ldi r16,0b01000000					; set up port a to 
+000014 bb0a      	out ddra, r16						;read the frequency input on pa7 and output pulse on pa6
+                 
+000015 d0c2      	rcall init_lcd_dog					; init display, using SPI serial interface 
+                 
+000016 9478      	sei
+                 
+                 
+                 main:
+                 	//brtc display
+000017 d031      	rcall spi_setup					;sets up and gets the voltage from the max144
+000018 930f      	push r16
+000019 e000      	ldi r16, $00
+00001a 1690      	cp r9, r16
+00001b f419      	brne pass
+00001c 1680      	cp r8, r16
+00001d f0c9      	breq display_capture1
+00001e 910f      	pop r16
+                 	pass:
+00001f 94e8      	clt
+000020 d03b      	rcall val_conv					;conver the obtained values to numbers
+000021 d044      	rcall display					;display the contents
+000022 24cc      	clr r12
+000023 24dd      	clr r13
+000024 24ee      	clr r14
+000025 24ff      	clr r15
+000026 2700      	clr r16
+000027 2722      	clr r18
+000028 2733      	clr r19
+000029 2744      	clr r20
+00002a 2755      	clr r21
+00002b 2766      	clr r22
+00002c 2777      	clr r23
+00002d 2788      	clr r24
+00002e 2799      	clr r25
+00002f 27aa      	clr r26
+                 	;clr r27
+000030 27cc      	clr r28
+000031 27dd      	clr r29
+                 	//sound buzzer
+000032 98a8      	cbi PortC, 0						; turn on sounder
+000033 d187      	rcall delay
+000034 d186      	rcall delay
+000035 9aa8      	sbi PortC, 0						; turn off sounder
+000036 cfe0      	rjmp main
+                 display_capture1:
+000037 c02d      	rjmp display_capture
+                 ;*********************switch interrupt*************************
+                 ; swich subroutine is used when the external interrupt is used
+                 ;
+                 ;ask raymond to add the debounce 
+                 switch:
+000038 930f      	push r16
+000039 b70f      	in r16, sreg
+00003a 930f      	push r16
+00003b 931f      	push r17
+00003c b300      	in r16, pind
+00003d 9500      	com r16
+00003e 7800      	andi r16, $80						;check if center pushbutton is pressed
+00003f d17b      	rcall delay
+000040 b310      	in r17, pind	
+000041 9510      	com r17
+000042 7810      	andi r17, $80						;check if button is still pressed
+000043 1710      	cp r17, r16
+000044 f011      	breq sett
+000045 94e8      		clt
+000046 c001      		rjmp finish
+                 	sett:
+000047 9468      		set
+                 	finish:
+000048 9518      	reti
+                 ;*********************spi_setup*******************************
+                 ; Get the voltage from max144, by reading the input values for 
+                 ; 12 clock cycles. The registers used to store the 12 bits are 
+                 ; r8 and r9 
+                 
+                 spi_setup:
+                 	.equ MISO = 6
+000049 e400      	ldi r16, (1<<MISO)
+00004a bb07      	out ddrb, r16
+00004b e500      	ldi r16, (1<<spe)|(1<<mstr)
+00004c b90d      	out SPCR, r16					;Enable SPI, Master, fck/4, 
+00004d ea0a      	ldi r16, $AA
+00004e b90f      	out SPDR, r16					;set up dummy value in data register
+00004f 98c0      	cbi PORTB, 0
+                 	wait_H:
+000050 9b77      		sbis spsr, spif
+000051 cffe      		rjmp wait_H
+000052 b09f      		in r9, spdr
+000053 932f      		push r18
+000054 e02f      		ldi r18, $0f
+000055 2292      		and r9, r18						;delete first four bits
+000056 912f      		pop r18
+000057 b90f      		out spdr, r16
+                 	wait_L:
+000058 9b77      		sbis spsr, spif
+000059 cffe      		rjmp wait_L
+00005a b08f      		in r8, spdr
+00005b 9508      	ret
+                 
+                 /*	
+                 wait_spifH:
+                 	nop nop nop
+                 	in r9, SPDR	
+                 wait_spifL:
+                 	nop nop nop 
+                 	in r8, spdr
+                 
+                 	ldi r16, $0f
+                 	and r9, r16						;delete first four bits
+                 	ret
+                 	*/
+                 
+                 
+                 
+                 ;*********************converion check***************************
+                 ; checks if  ADIF flag is set in the adscra register. 
+                 ; when the flag is 1 it means that the conversion is complete,
+                 ; so reset the flag, convert the bits stored in adch and adcl register 
+                 ; and covert
+                 ;display the converted value, by branching to display subroutine
+                 val_conv:	
+00005c d12b      		rcall mpy16u					;multiply the counts with 50
+00005d d13e      		rcall div32u					;divide the counts by 10
+00005e d0ed      		rcall unpack				;convert the answer to ascii
+00005f 9508      		ret								;go back and display
+                 		
+                 
+                 
+                 
+                 ;*****************ADC initialization**************************
+                  ;intializes all the required registers located in port A, for 
+                  ; analag to digital conversion. 
+                  ; registers to be initialized:
+                  ; ADMUX - adc multiplexer selection register
+                  ; REFS1  REFS0  ADLAR  MUX4  MUX3  MUX2  MUX1  MUX0
+                  ; 
+                  ; REFS1 and REFS0 will be both set to 1, in order to get 2.56v 
+                  ; internal voltage reference, refer to pg(471). 
+                  ; Adlar -  by default is right adjusted.
+                  ;
+                  ; ADCSRA - adc control and status register A
+                  ; ADEN  ADSC  ADATE  ADIF ADIE  ADPS2  ADPS1  ADPS0
+                  ; 
+                  ; ADEN: ADC ENABLE
+                  ; ADSC - TO START CONVERSION 
+                  ; 
+                  ; SFIOR - Special functions io register
+                  ; ADTS2  ADTS1  ADTS0
+                  ;	7		6		5
+                  ; THE above three bits could be used to set various interrupts
+                  adc_init:
+                  
+000060 ec04      	ldi r16, 0b11000100					;load 16 to set the ADC4 and single ended
+000061 b907      	out admux, R16						;input and internal voltage reference to 2.56v
+                 										; the conversion is running in single run mode
+                 	;the below code can be placed wherever its required to start the conversion
+000062 ee04      	ldi r16, 0b11100100					; for this lab we will be using a division factor
+000063 b906      	out adcsra, r16						; of 16(clk/16)
+                 	//sei
+                 	;ldi r16, 0b01000000					;could be used to set the enternal int 0
+                 	;out sfior, r16		
+000064 9508      	ret
+                 ;_________________________________________________________________________________________
+                 
+                 
+                 ;**************************************************************************
+                 ;---------------------------- SUBROUTINES ----------------------------
+                 
+                 ;*********************LCD DISPLAY CODE******************************
+                 
+                 ;---------------------------------------------------------
+                 ;Code to load and display each line on the lcd 
+                 ;r25 is used to load the value of the each digit to the pointer
+                 ;line 2 refers to table, which containes numbers and depending 
+                 ;on the frequncy, each number is picked and displayed 
+                 ;---------------------------------------------------------
+                 display_capture:
+000065 9468      	set
+                 display:
+000066 d0b4         rcall clr_dsp_buffs					; clear all three buffer lines
+000067 f40e         brtc regular1
+000068 f0f6         brts regular2
+                   regular1:
+                 
+                    ;load 1st line of prompt message into dbuff1
+000069 e0f0         ldi  ZH, high(line1_message<<1)		;
+00006a eee8         ldi  ZL, low(line1_message<<1)		;
+00006b d0b7         rcall load_msg						; load message into buffer(s).
+                 
+                 
+                    ;LOAD 2ND LINE OF THE MESSAGE INTO DBUFF2
+00006c e0f0         ldi ZH, high(line2_message<<1)		;
+00006d efea         ldi ZL, low(line2_message<<1)		;load the table to stack
+00006e d0b4         rcall load_msg						;load the frequency number into the buffer
+                    
+                 
+                    ;load 3rd line of prompt message into dbuff3
+00006f e0f0         ldi  ZH, high(line3_message<<1)		;
+000070 efec         ldi  ZL, low(line3_message<<1)		;
+000071 d0b1         rcall load_msg						; load message into buffer(s).
+000072 d083         rcall update_lcd_dog
+000073 9508         ret
+                 ;--------------------------------------
+                 ;lines to display on the lcd
+                 ;--------------------------------------
+                 .cseg 
+000074 2a01
+000075 2a2a
+000076 2a2a
+000077 6f56
+000078 746c
+000079 6761
+00007a 2a65
+00007b 2a2a
+00007c 002a      line1_message:	.db 1, "*****Voltage****", 0  ; test string for line #1.
+00007d 0002      line2_message:	.db 2,"",0
+00007e 5203
+00007f 4e55
+000080 2020
+000081 2020
+000082 2020
+000083 2020
+000084 5645
+000085 314d
+000086 0043      line3_message:	.db 3, "RUN        EVM1C", 0  ; test string for line #3.
+                 
+                 
+                 
+                 regular2:
+                 
+                    ;load 1st line of prompt message into dbuff1
+000087 e0f1         ldi  ZH, high(line1_message0<<1)		;
+000088 e2e4         ldi  ZL, low(line1_message0<<1)		;
+000089 d099         rcall load_msg						; load message into buffer(s).
+                 
+                    ;LOAD 2ND LINE OF THE MESSAGE INTO DBUFF2
+00008a e0f1         ldi ZH, high(line2_message0<<1)		;
+00008b e3e6         ldi ZL, low(line2_message0<<1)		;load the table to stack
+00008c d096         rcall load_msg						;load the frequency number into the buffer
+                    
+                    ;load 3rd line of prompt message into dbuff3
+00008d e0f1         ldi  ZH, high(line3_message0<<1)		;
+00008e e3e8         ldi  ZL, low(line3_message0<<1)		;
+00008f d093         rcall load_msg						; load message into buffer(s).
+000090 d065         rcall update_lcd_dog
+000091 cf85         rjmp main
+                 ;--------------------------------------
+                 ;lines to display on the lcd
+                 ;--------------------------------------
+                 
+                 .cseg
+000092 2a01
+000093 2a2a
+000094 2a2a
+000095 6f56
+000096 746c
+000097 6761
+000098 2a65
+000099 2a2a
+00009a 002a      line1_message0:	.db 1, "*****Voltage****", 0  ; test string for line #1.
+00009b 0002      line2_message0:	.db 2,"",0
+00009c 4303
+00009d 5041
+00009e 5554
+00009f 4552
+0000a0 2020
+0000a1 2020
+0000a2 5645
+0000a3 314d
+0000a4 0042      line3_message0:	.db 3, "CAPTURE    EVM1B", 0  ; test string for line #3.
+                 
+                 
+                 ;====================================
+                 .include "lcd_dog_asm_driver_m16A.inc"  ; LCD DOG init/update procedures.
+                 
+                 ;modified 11/26/12 KLS
+                 ; lcd_spi_transmit_data and lcd_spi_transmit_CMD handling of SPIF flag
+                 ;
+                 ;modifued 07/21/14 FST
+                 ; added BLOCK comments for adjusting power_ctrl & contrast_set parameters
+                 ;
+                 
+                 
+                 ;************************************************************************ 
+                 ;   ATMega16A  2015 Version                           PRINT IN LANDSCAPE                     
+                 ;   
+                 ;   This AVR-asm code module is usable as an include file for assembly
+                 ;   language and or mixed asm/C application programs. The code is freely 
+                 ;   usable by any University of Stonybrook undergraduate students for any
+                 ;   and all not-for-profit system designs and or implementations.
+                 ;
+                 ;   This code is designed to be executed on an AVR ATMega micro-computer.
+                 ;   And may be readily adapted for compatibility with IAR/AVR compilers. 
+                 ;   See the IAR assembler reference guide for more information by 
+                 ;   clicking 'Help > AVR Assembly Reference Guide" on the above menus.
+                 ;
+                 ;
+                 ;************************************************************************
+                 ;
+                 ;   This module contains procedures to initialize and update
+                 ;   DOG text based LCD display modules, including the EA DOG163M LCD
+                 ;   modules configured with three (3) 16 charactors display lines.
+                 ;
+                 ;   The display module hardware interface uses a 1-direction, write only
+                 ;   SPI interface. (See below for more information.)
+                 ;
+                 ;   The display module software interface uses three (3) 16-byte
+                 ;   data (RAM) based display buffers - One for each line of the display.
+                 ;   (See below for more information.)
+                 ;
+                 ;*********************************************************************
+                 ;
+                 ;   *** Port B Interface Definitions:
+                 ;
+                 ;  Port B             PB7   PB6   PB5   PB4   PB3   PB2   PB1   PB0
+                 ;  Port B alt names   SCK   MISO  MOSI  /SS   /RS    -     -     -
+                 ;  LCD Mod Signal     D6     -     D7   /CSB   -     -     -     -
+                 ;  LCD Mod Pin #      29     -     28    38    -     -     -     -
+                 ;
+                 ;  Notes: RS ==>  0 = command regs, 1 = data regs
+                 ;         /SS = active low SPI select signal
+                 ;
+                 ;******************
+                 
+                 
+                 ;***  DATA Segment  **************************************************   
+                 .DSEG
+000060           dsp_buff_1:   .byte 16
+000070           dsp_buff_2:   .byte 16
+000080           dsp_buff_3:   .byte 16
+                 
+                 
+                 
+                 
+                 ;***  CODE Segment Subroutines  ************************************
+                 .CSEG
+                 
+                 
+                 
+                 ;************************
+                 ;NAME:        delay_30uS
+                 ;ASSUMES:     nothing
+                 ;RETURNS:     nothing
+                 ;MODIFIES:    R24, SREG
+                 ;CALLED BY:   init_dsp
+                 ;DESCRIPTION: This procedure will generate a fixed delay of just over
+                 ;             30 uS (assuming a 1 MHz clock).
+                 ;********************************************************************
+0000a5 0000      delay_30uS:   nop     ; fine tune delay
+0000a6 0000                    nop
+0000a7 938f                    push  r24
+0000a8 e08f                    ldi   r24, 0x0f  ; load delay count.
+0000a9 958a      d30_loop:     dec   r24        ; count down to
+0000aa f7f1                    brne  d30_loop   ; zero.
+0000ab 918f                    pop   r24
+0000ac 9508                    ret
+                 
+                 
+                 
+                 ;*********************
+                 ;NAME:        v_delay
+                 ;ASSUMES:     R22, R23 = initial count values defining how many
+                 ;             30uS delays will be called. This procedure can generate
+                 ;             short delays (r23 = small #) or much longer delays (where
+                 ;             R23 value is large).
+                 ;RETURNS:     nothing
+                 ;MODIFIES:    R22, R23, SREG
+                 ;CALLED BY:   init_dsp, plus...
+                 ;DESCRIPTION: This procedure will generate a variable delay for a fixed
+                 ;             period of time based the values pasted in R24 and R25.
+                 ;
+                 ;Sample Delays:
+                 ;
+                 ;             R22  R23  DelayTime
+                 ;             ---  ---  ---------
+                 ;              1    1   ~65.5 uS
+                 ;              0    1   ~14.2 mS
+                 ;              0    9   ~130 mS
+                 ;**********************************************************************
+0000ad dff7      v_delay:      rcall delay_30uS ; delay for ~30uS
+0000ae 956a                    dec   r22      ; decrement inner loop value, and
+0000af f7e9                    brne  v_delay  ; loop until zero.
+0000b0 957a                    dec   r23      ; decr outer loop count, and loop back
+0000b1 f7d9                    brne  v_delay  ; to inner loop delay until r23 zero.
+0000b2 9508                    ret
+                 
+                 
+                 
+                 
+                 ;***********************
+                 ;NAME:        delay_40mS
+                 ;ASSUMES:     nothing
+                 ;RETURNS:     nothing
+                 ;MODIFIES:    R22,R23, SREG
+                 ;CALLED BY:   init_dsp, ????
+                 ;DESCRIPTION: This procedure will generate a fixed delay of just over
+                 ;             40 mS.
+                 ;********************************************************************
+0000b3 e060      delay_40mS:   ldi   r22,0        ; load inner loop var
+0000b4 e074                    ldi   r23,4        ; load outer loop var
+0000b5 dff7                    rcall  v_delay     ; delay
+0000b6 9508                    ret
+                 
+                 
+                 
+                 
+                 ;************************
+                 ;NAME:       init_spi_lcd
+                 ;ASSUMES:    IMPORTANT: PortB set as output (during program init)
+                 ;RETURNS:    nothing
+                 ;MODIFIES:   DDRB, SPCR
+                 ;CALLED BY:  init_dsp, update
+                 ;DESCRITION: init SPI port for command and data writes to LCD via SPI
+                 ;********************************************************************
+                 init_spi_lcd:
+0000b7 930f            push r16
+0000b8 e50c            ldi r16,(1<<SPE) | (1<<MSTR) | (1<<CPOL) | (1<<CPHA)
+0000b9 b90d            out SPCR,r16   ; Enable SPI, Master, fck/4, 
+                       
+                       ;kill any spurious data...
+0000ba b10e            in r16, SPSR   ; clear SPIF bit in SPSR
+0000bb b10f            in r16, SPDR   ;
+0000bc 910f            pop r16        ; restore r16 value...
+0000bd 9508            ret
+                 
+                 
+                 
+                 ;********************************
+                 ;NAME:       lcd_spi_transmit_CMD
+                 ;ASSUMES:    r16 = byte for LCD.
+                 ;            SPI port is configured.
+                 ;RETURNS:    nothing
+                 ;MODIFIES:   R16, PortB, SPCR
+                 ;CALLED BY:  init_dsp, update
+                 ;DESCRITION: outputs a byte passed in r16 via SPI port. Waits for data
+                 ;            to be written by spi port before continuing.
+                 ;*********************************************************************
+                 lcd_spi_transmit_CMD:
+0000be 930f           push r16          ; save command, need r16.
+0000bf 98c3           cbi   portB, 3    ; clr PB1 = RS = 0 = command.
+0000c0 98c4           cbi   portB, 4    ; clr PB2 = /SS = selected.
+0000c1 b10e              in r16, SPSR   ; clear SPIF bit in SPSR.
+0000c2 b10f              in r16, SPDR   ;
+0000c3 910f           pop r16           ; restore command
+0000c4 b90f           out SPDR,r16      ; write data to SPI port.
+                 
+                 
+                      ;Wait for transmission complete
+                 wait_transmit:
+0000c5 b10e           in r16, SPSR     ; read status reg
+0000c6 ff07           sbrs r16, SPIF   ; if bit 7  = 0 wait
+0000c7 cffd           rjmp wait_transmit
+0000c8 b10f      	 in r16, SPDR		;added by Ken to clear SPIF
+0000c9 9ac4           sbi   portB, 4   ; set PB2 = /SS = deselected
+0000ca 9508           ret
+                 
+                 
+                 
+                 
+                 ;*********************************
+                 ;NAME:       lcd_spi_transmit_DATA
+                 ;ASSUMES:    r16 = byte to transmit to LCD.
+                 ;            SPI port is configured.
+                 ;RETURNS:    nothing
+                 ;MODIFIES:   R16, SPCR
+                 ;CALLED BY:  init_dsp, update
+                 ;DESCRITION: outputs a byte passed in r16 via SPI port. Waits for
+                 ;            data to be written by spi port before continuing.
+                 ;*****************************************************************
+                 lcd_spi_transmit_DATA:
+0000cb 930f           push r16          ; save command, need r16.
+0000cc 9ac3           sbi   portB, 3    ; clr PB1 = RS = 1 = data.
+0000cd 98c4           cbi   portB, 4    ; clr PB2 = /SS = selected.
+0000ce b10e              in r16, SPSR   ; clear SPIF bit in SPSR.
+0000cf b10f              in r16, SPDR   ;
+0000d0 910f           pop r16           ; restore command.
+0000d1 b90f           out SPDR,r16      ; write data to SPI port.
+                 
+                 
+                      ;Wait for transmission complete
+                 wait_transmit1:
+0000d2 b10e           in r16, SPSR     ; read status reg
+0000d3 ff07           sbrs r16, SPIF   ; if bit 7  = 0 wait
+0000d4 cffd           rjmp wait_transmit1
+0000d5 b10f      	 in r16, SPDR		;clear SPIF (because it follows in r16,SPSR)
+0000d6 9ac4           sbi   portB, 4   ; set PB2 = /SS = deselected
+0000d7 9508           ret
+                 
+                 
+                 
+                 ;************************
+                 ;NAME:       init_lcd_dog
+                 ;ASSUMES:    nothing
+                 ;RETURNS:    nothing
+                 ;MODIFIES:   R16, R17
+                 ;CALLED BY:  main application
+                 ;DESCRITION: inits DOG module LCD display for SPI (serial) operation.
+                 ;NOTE:  Can be used as is with MCU clock speeds of 4MHz or less.
+                 ;********************************************************************
+                 ; public __version_1 void init_dsp(void)
+                 init_lcd_dog:
+0000d8 dfde             rcall init_spi_lcd   ; init SPI port for DOG LCD.
+                 
+                 
+                 start_dly_40ms:
+0000d9 dfd9             rcall  delay_40mS    ; startup delay.
+                 
+                 
+                 func_set1:
+0000da e309             ldi    r16,0x39      ; send fuction set #1
+0000db dfe2             rcall  lcd_spi_transmit_CMD   ;
+0000dc dfc8             rcall  delay_30uS    ; delay for command to be processed
+                 
+                 
+                 func_set2:
+0000dd e309             ldi    r16,0x39      ; send fuction set #2
+0000de dfdf             rcall  lcd_spi_transmit_CMD
+0000df dfc5             rcall  delay_30uS    ; delay for command to be processed
+                 
+                 
+                 bias_set:
+0000e0 e10e             ldi    r16,0x1E      ; set bias value.
+0000e1 dfdc             rcall  lcd_spi_transmit_CMD
+0000e2 dfc2             rcall  delay_30uS    ;
+                 
+                 
+                                                    ; =============================================
+                                                    ; === CALIBRATION PARAMETER - USER ADJUSTABLE
+                 power_ctrl:                        ; === (CAUTION... VERY DELICATE ADJUSTMENT)
+0000e3 e500             ldi    r16,0x50             ; === 5V ~= 0x50 nominal;      Adjust by 1 ONLY
+0000e4 dfd9             rcall  lcd_spi_transmit_CMD ; === 3.3V ~= 0x55 nominal     and think hex!
+0000e5 dfbf             rcall  delay_30uS           ;   Hex = 0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f
+                                                    ; ==========================================
+                 
+                 follower_ctrl:
+0000e6 e60c             ldi    r16,0x6C      ; follower mode on... 
+0000e7 dfd6             rcall  lcd_spi_transmit_CMD
+0000e8 dfca             rcall  delay_40mS    ;
+                                                    ; ============================================
+                                                    ; === CALIBRATION PARAMETER - USER ADJUSTABLE
+                 contrast_set:                      ; === LCD CONTRAST SETTING ADJUSTMENT
+0000e9 e707             ldi    r16,0x77             ; === 
+0000ea dfd3             rcall  lcd_spi_transmit_CMD ; === Delicate: increases for 3.3V vs 5V
+0000eb dfb9             rcall  delay_30uS           ; ========================================= 
+                 
+                 display_on:
+0000ec e00c             ldi    r16,0x0c      ; display on, cursor off, blink off
+0000ed dfd0             rcall  lcd_spi_transmit_CMD
+0000ee dfb6             rcall  delay_30uS    ; 
+                 
+                 
+                 clr_display:
+0000ef e001             ldi    r16,0x01      ; clear display, cursor home
+0000f0 dfcd             rcall  lcd_spi_transmit_CMD
+                 
+                 
+0000f1 dfb3             rcall  delay_30uS    ;
+                 
+                 
+                 entry_mode:
+0000f2 e006             ldi    r16,0x06      ; clear display, cursor home
+0000f3 dfca             rcall  lcd_spi_transmit_CMD;
+0000f4 dfb0             rcall  delay_30uS    ;
+0000f5 9508             ret
+                 
+                 
+                 
+                 
+                 ;**************************
+                 ;NAME:       update_lcd_dog
+                 ;ASSUMES:    display buffers loaded with display data
+                 ;RETURNS:    nothing
+                 ;MODIFIES:   R16,R20,R30,R31,SREG
+                 ;
+                 ;DESCRITION: Updates the LCD display lines 1, 2, and 3, using the
+                 ;  contents of dsp_buff_1, dsp_buff_2, and dsp_buff_3, respectively.
+                 ;*******************************************************************
+                 ; public __version_1 void update_dsp_dog (void)
+                 update_lcd_dog:
+0000f6 dfc0             rcall init_spi_lcd    ; init SPI port for LCD.
+0000f7 e140             ldi   r20,16          ; init 'chars per line' counter.
+0000f8 934f             push  r20             ; save for later used.
+                 
+                 
+                        ;send line 1 to the LCD module.
+                 wr_line1:     
+0000f9 e0f0             ldi   ZH, high (dsp_buff_1)  ; init ptr to line 1 display buffer.
+0000fa e6e0             ldi   ZL, low (dsp_buff_1)   ;
+                 snd_ddram_addr:
+0000fb e800             ldi   r16,0x80             ; init DDRAM addr-ctr 
+0000fc dfc1             rcall lcd_spi_transmit_CMD ; 
+0000fd dfa7             rcall delay_30uS
+                 snd_buff_1:
+0000fe 9101             ld    r16, Z+
+0000ff dfcb             rcall lcd_spi_transmit_DATA
+000100 dfa4             rcall delay_30uS
+000101 954a             dec   r20
+000102 f7d9             brne  snd_buff_1
+                 
+                 
+                        ;send line 2 to the LCD module.
+                 init_for_buff_2:
+000103 914f             pop   r20     ; reload r20 = chars per line counter
+000104 934f             push  r20     ; save for line 3
+                 wr_line2:
+000105 e0f0             ldi   ZH, high (dsp_buff_2)  ; init ptr to line 2 display buffer.
+000106 e7e0             ldi   ZL, low (dsp_buff_2)
+                 snd_ddram_addr2:
+000107 e900             ldi   r16,0x90               ; init DDRAM addr-ctr 
+000108 dfb5             rcall lcd_spi_transmit_CMD           ;  
+000109 df9b             rcall delay_30uS
+                 snd_buff_2:
+00010a 9101             ld    r16, Z+
+00010b dfbf             rcall lcd_spi_transmit_DATA
+00010c df98             rcall delay_30uS
+00010d 954a             dec   r20
+00010e f7d9             brne  snd_buff_2
+                 
+                 
+                        ;send line 3 to the LCD module.
+                 init_for_buff_3:
+00010f 914f             pop   r20     ; reload r20 = chars per line counter
+                 wr_line3:
+000110 e0f0             ldi   ZH, high (dsp_buff_3)  ; init ptr to line 2 display buffer.
+000111 e8e0             ldi   ZL, low (dsp_buff_3)
+                 snd_ddram_addr3:
+000112 ea00             ldi   r16,0xA0               ; init DDRAM addr-ctr 
+000113 dfaa             rcall lcd_spi_transmit_CMD           ;  
+000114 df90             rcall delay_30uS
+                 
+                 
+                 snd_buff_3:
+000115 9101             ld    r16, Z+
+000116 dfb4             rcall lcd_spi_transmit_DATA
+000117 df8d             rcall delay_30uS
+000118 954a             dec   r20
+000119 f7d9             brne  snd_buff_3
+00011a 9508             ret
+                 
+                 
+                 ;******* End Of LCD DOG Include Module *********************************
+                 ;====================================
+                 
+                 ;************************
+                 ;NAME:      clr_dsp_buffs
+                 ;FUNCTION:  Initializes dsp_buffers 1, 2, and 3 with blanks (0x20)
+                 ;ASSUMES:   Three CONTIGUOUS 16-byte dram based buffers named
+                 ;           dsp_buff_1, dsp_buff_2, dsp_buff_3.
+                 ;RETURNS:   nothing.
+                 ;MODIFIES:  r25,r26, Z-ptr
+                 ;CALLS:     none
+                 ;CALLED BY: main application and diagnostics
+                 ;********************************************************************
+                 clr_dsp_buffs:
+00011b e390           ldi R25, 48						; load total length of both buffer.
+00011c e2a0           ldi R26, ' '						; load blank/space into R26.
+00011d e0f0           ldi ZH, high (dsp_buff_1)			; Load ZH and ZL as a pointer to 1st
+00011e e6e0           ldi ZL, low (dsp_buff_1)			; byte of buffer for line 1.
+                    
+                     ;set DDRAM address to 1st position of first line.
+                 store_bytes:
+00011f 93a1           st  Z+, R26						; store ' ' into 1st/next buffer byte and
+                 										; auto inc ptr to next location.
+000120 959a           dec  R25							; 
+000121 f7e9           brne store_bytes					; cont until r25=0, all bytes written.
+000122 9508           ret
+                 
+                 
+                 ;*******************
+                 ;NAME:      load_msg
+                 ;FUNCTION:  Loads a predefined string msg into a specified diplay
+                 ;           buffer.
+                 ;ASSUMES:   Z = offset of message to be loaded. Msg format is 
+                 ;           defined below.
+                 ;RETURNS:   nothing.
+                 ;MODIFIES:  r16, Y, Z
+                 ;CALLS:     nothing
+                 ;CALLED BY:  
+                 ;********************************************************************
+                 ; Message structure:
+                 ;   label:  .db <buff num>, <text string/message>, <end of string>
+                 ;
+                 ; Message examples (also see Messages at the end of this file/module):
+                 ;   msg_1: .db 1,"First Message ", 0   ; loads msg into buff 1, eom=0
+                 ;   msg_2: .db 1,"Another message ", 0 ; loads msg into buff 1, eom=0
+                 ;
+                 ; Notes: 
+                 ;   a) The 1st number indicates which buffer to load (either 1, 2, or 3).
+                 ;   b) The last number (zero) is an 'end of string' indicator.
+                 ;   c) Y = ptr to disp_buffer
+                 ;      Z = ptr to message (passed to subroutine)
+                 ;********************************************************************
+                 load_msg:
+000123 93af      	 push r26
+000124 931f      	 push r17
+000125 e0d0           ldi YH, high (dsp_buff_1)			; Load YH and YL as a pointer to 1st
+000126 e6c0           ldi YL, low (dsp_buff_1)			; byte of dsp_buff_1 (Note - assuming 
+                 										; (dsp_buff_1 for now).
+000127 9105           lpm R16, Z+						; get dsply buff number (1st byte of msg).
+000128 3001           cpi r16, 1							; if equal to '1', ptr already setup.
+000129 f031           breq get_msg_byte					; jump and start message load.
+00012a 9660           adiw YH:YL, 16						; else set ptr to dsp buff 2.
+00012b e010      	 ldi r17, $00
+00012c e0a6      	 ldi r26, 6
+00012d 3002           cpi r16, 2							; if equal to '2', ptr now setup.
+00012e f031           breq digit_load					; jump and start message load.
+00012f 9660           adiw YH:YL, 16						; else set ptr to dsp buff 3.
+                         
+                 get_msg_byte:
+000130 9105           lpm R16, Z+						; get next byte of msg and see if '0'.        
+000131 3000           cpi R16, 0							; if equal to '0', end of message reached.
+000132 f0b1           breq msg_loaded					; jump and stop message loading operation.
+000133 9309           st Y+, R16							; else, store next byte of msg in buffer.
+000134 cffb           rjmp get_msg_byte					; jump back and continue...
+                 
+                 ;__________________________________________
+                 ; digital_load will only be accessed when displaying line 2, 
+                 ; since the frequency to be displayed in line 2 is constantly 
+                 ; changing for different waveform, the line 2 has to be adjusted 
+                 ; according. 
+                 ; r17, will inc until 6, to display 6 empty spaces
+                 ; r4 will contain the first digit of the frequency
+                 ; r3 will contain the second digit of the frequency
+                 ; r2 will contain the third digit of the frequency
+                 ; r1 will contian the fouth digit of the frequency
+                 ;get_dis_freq subroutine will just transfer each value stored in 
+                 ; r25 to y pointer
+                 ;_______________________________________________	
+                 digit_load:
+000135 9513      	inc r17
+000136 e290      	ldi r25, $20					;load empty spaces for 6 places
+000137 d00f      	rcall get_dis_freq				;display 
+000138 131a      	cpse r17, r26					;check if 6 places typed
+000139 cffb      	rjmp digit_load					;repeat until 6 places
+                 	;mov r25, r5						;load the first number in freq
+                 	;rcall get_dis_freq				;display 
+00013a 2d94      	mov r25, r4					;load the first number in freq
+00013b d00b      	rcall get_dis_freq				;display 
+00013c e29e      	ldi r25, $2E
+00013d d009      	rcall get_dis_freq				;load period to display inbetween numbers
+00013e 2d93      	mov r25, r3					;load the second number in freq
+00013f d007      	rcall get_dis_freq				;display 
+000140 2d92      	mov r25, r2						;load the third number in freq
+000141 d005      	rcall get_dis_freq				;display 
+000142 2d91      	mov r25, r1						;load the fourth number in freq
+000143 d003      	rcall get_dis_freq				;display 
+000144 e596      	ldi r25, $56						;load the fourth number in freq
+000145 d001      	rcall get_dis_freq				;display 
+000146 c002      	rjmp msg_loaded					;go to the next line of the lcd
+                 
+                 get_dis_freq:
+000147 9399      	st Y+, r25						;display the selected frquency
+000148 9508      	ret		
+                 
+                 	
+                 msg_loaded:
+000149 911f      	 pop r17
+00014a 91af      	 pop r26
+00014b 9508           ret
+                 ;________________________________________________________________________________________
+                 
+                 ;------------------------------------------------
+                 ;unpacks the values store in r8 and r9 to r1- r4
+                 ; r4 containe the left most number ie the thousanth
+                 ;digit and r1 the right most number
+                 ;------------------------------------------------
+                 .def bit01 = r13
+                 .def bit23 = r14
+                 .def bit45 = r15
+                 unpack:
+00014c 930f      	push r16						;store the value currently in r16
+00014d d01f      	rcall bin2BCD16					;convert the values from binary to bcd
+00014e 2c2d      	mov r2, bit01						;make a copy of r13 in r2
+00014f 2c4e      	mov r4, bit23						;make a copy of r14 in r4
+000150 2c6f      	mov r6, bit45						;make a copy of r15 in r6
+000151 e00f      	ldi r16, $0f					;use and function to
+000152 22d0      	and bit01, r16					;mask the upper nibble of r8
+000153 2c1d      	mov r1, bit01						;move lower nibble to r1
+000154 22e0      	and bit23, r16					;mask upper nibble of r9
+000155 2c3e      	mov r3, bit23						;move lower nible to r3
+000156 22f0      	and bit45, r16					;mask the upper nibble of r8
+000157 2c5f      	mov r5, bit45						;move lower nibble to r1
+000158 9500      	com r16							;load with f0 to mask lower nibble
+000159 2220      	and r2, r16						;mask lower nibble of r8
+00015a 9422      	swap r2							;switch upper and lower nibble
+00015b 2240      	and r4, r16						;mask lower nibble of r9
+00015c 9442      	swap r4							;switch upper and lower nibble
+                 	//and r6, r16					;mask lower nibble of r9
+                 	//swap r6						;switch upper and lower nibble	
+00015d e300      	ldi r16, $30
+00015e 0e10      	add r1, r16
+00015f 0e20      	add r2, r16
+000160 0e30      	add r3, r16
+000161 0e40      	add r4, r16
+000162 0e50      	add r5, r16						;converting the bcd's to ascii
+000163 910f      	pop r16							;retrive the value previosly stored
+000164 9508      	ret
+                 
+                 .undef bit01 
+                 .undef bit23	
+                 .undef bit45		
+                 	
+                 
+                 
+                 
+                 ;------------------------------------------------
+                 ; converts the values from bcd to ascii by adding 
+                 ; 30 to it. 
+                 ;------------------------------------------------
+                 
+                 bcd_to_ascii:
+000165 930f      	push r16
+000166 e300      	ldi r16, $30
+000167 0f20      	add r18, r16
+000168 0f30      	add r19, r16
+000169 0f40      	add r20, r16
+00016a 0f50      	add r21, r16
+00016b 910f      	pop r16							;retrive the value previosly stored
+00016c 9508      	ret
+                 
+                 
+                 ;_____________________________________________________________________________________
+                 
+                 
+                 
+                 
+                 
+                 ;***************************************************************************
+                 ;*
+                 ;* "bin2BCD16" - 16-bit Binary to BCD conversion
+                 ;*
+                 ;* This subroutine converts a 16-bit number (fbinH:fbinL) to a 5-digit
+                 ;* packed BCD number represented by 3 bytes (tBCD2:tBCD1:tBCD0).
+                 ;* MSD of the 5-digit number is placed in the lowermost nibble of tBCD2.
+                 ;*
+                 ;* Number of words	:25
+                 ;* Number of cycles	:751/768 (Min/Max)
+                 ;* Low registers used	:3 (tBCD0,tBCD1,tBCD2)
+                 ;* High registers used  :4(fbinL,fbinH,cnt16a,tmp16a)	
+                 ;* Pointers used	:Z
+                 ;*
+                 ;***************************************************************************
+                 //.include "..\8515def.inc"
+                 ;***** Subroutine Register Variables
+                 
+                 
+                 .equ	AtBCD0	=13			;address of tBCD0
+                 .equ	AtBCD2	=15			;address of tBCD1
+                 
+                 .def	tBCD0	=r13		;BCD value digits 1 and 0
+                 .def	tBCD1	=r14		;BCD value digits 3 and 2
+                 .def	tBCD2	=r15		;BCD value digit 4
+                 .def	fbinL	=r16		;binary value Low byte
+                 .def	fbinH	=r17		;binary value High byte
+                 .def	cnt16a	=r18		;loop counter
+                 .def	tmp16a	=r19		;temporary value
+                 
+                 ;***** Code
+                 
+                 bin2BCD16:
+                 	//sub r18, r19
+00016d 2f13      	mov fbinH, r19			;copy the values of edge counter to fbin
+00016e 2f02      	mov fbinL, r18
+00016f e120      	ldi	cnt16a,16			;Init loop counter	
+000170 24ff      	clr	tBCD2				;clear result (3 bytes)
+000171 24ee      	clr	tBCD1		
+000172 24dd      	clr	tBCD0		
+000173 27ff      	clr	ZH					;clear ZH (not needed for AT90Sxx0x)
+                 bBCDx_1:
+000174 0f00      	lsl	fbinL				;shift input value
+000175 1f11      	rol	fbinH				;through all bytes
+000176 1cdd      	rol	tBCD0				;
+000177 1cee      	rol	tBCD1
+000178 1cff      	rol	tBCD2
+000179 952a      	dec	cnt16a				;decrement loop counter
+00017a f409      	brne bBCDx_2			;if counter not zero
+00017b 9508      	ret						;   return
+                 
+                 bBCDx_2:
+00017c e1e0      	ldi	r30,AtBCD2+1		;Z points to result MSB + 1
+                 bBCDx_3:	
+00017d 9132      	ld	tmp16a,-Z			;get (Z) with pre-decrement
+00017e 5f3d      	subi tmp16a,-$03		;add 0x03
+00017f fd33      	sbrc tmp16a,3			;if bit 3 not clear
+000180 8330      	st Z,tmp16a				;store back
+000181 8130      	ld	tmp16a,Z			;get (Z)
+000182 5d30      	subi tmp16a,-$30		;add 0x30
+000183 fd37      	sbrc tmp16a,7			;if bit 7 not clear
+000184 8330      	st	Z,tmp16a			;store back
+000185 30ed      	cpi	ZL,AtBCD0			;done all three?
+000186 f7b1      	brne bBCDx_3			;loop again if not
+000187 cfec      	rjmp bBCDx_1	
+                 
+                 .undef	tBCD0				;BCD value digits 1 and 0
+                 .undef	tBCD1				;BCD value digits 3 and 2
+                 .undef	tBCD2				;BCD value digit 4
+                 .undef	fbinL				;binary value Low byte
+                 .undef	fbinH				;binary value High byte
+                 .undef	cnt16a				;loop counter
+                 .undef	tmp16a				;temporary value
+                 
+                 ;________________________________________________________________________________	
+                 
+                 ;***************************************************************************
+                 ;*
+                 ;* "mpy16u" - 16x16 Bit Unsigned Multiplication
+                 ;*
+                 ;* This subroutine multiplies the two 16-bit register variables 
+                 ;* mp16uH:mp16uL and mc16uH:mc16uL.
+                 ;* The result is placed in m16u3:m16u2:m16u1:m16u0.
+                 ;*  
+                 ;* Number of words	:14 + return
+                 ;* Number of cycles	:153 + return
+                 ;* Low registers used	:None
+                 ;* High registers used  :7 (mp16uL,mp16uH,mc16uL/m16u0,mc16uH/m16u1,m16u2,
+                 ;*                          m16u3,mcnt16u)	
+                 ;*
+                 ;***************************************************************************
+                 
+                 ;***** Subroutine Register Variables
+                 .def	mc16uL	=r16		;multiplicand low byte
+                 .def	mc16uH	=r17		;multiplicand high byte
+                 .def	mp16uL	=r18		;multiplier low byte
+                 .def	mp16uH	=r19		;multiplier high byte
+                 
+                 .def	m16u0	=r18		;result byte 0 (LSB)
+                 .def	m16u1	=r19		;result byte 1
+                 .def	m16u2	=r20		;result byte 2
+                 .def	m16u3	=r21		;result byte 3 (MSB)
+                 .def	mcnt16u	=r22		;loop counter
+                 
+                 ;***** Code
+                 
+                 mpy16u:	
+000188 2733      	clr r19
+000189 2d08      	mov mc16uL, r8
+00018a 2d19      	mov mc16uH, r9			;copy the counts to multiplicand
+00018b e025      	ldi r18, 5				;load the multiplier, to measure the
+00018c 2f22      	mov mp16uL, r18			;5v range
+00018d 2755      	clr	m16u3				;clear 2 highest bytes of result
+00018e 2744      	clr	m16u2
+00018f e160      	ldi	mcnt16u,16			;init loop counter
+000190 9536      	lsr	mp16uH
+000191 9527      	ror	mp16uL
+                 
+000192 f410      m16u_1:	brcc	noad8		;if bit 0 of multiplier set
+000193 0f40      	add	m16u2,mc16uL	;add multiplicand Low to byte 2 of res
+000194 1f51      	adc	m16u3,mc16uH	;add multiplicand high to byte 3 of res
+                 
+000195 9557      noad8:	ror	m16u3		;shift right result byte 3
+000196 9547      	ror	m16u2		;rotate right result byte 2
+000197 9537      	ror	m16u1		;rotate result byte 1 and multiplier High
+000198 9527      	ror	m16u0		;rotate result byte 0 and multiplier Low
+000199 956a      	dec	mcnt16u		;decrement loop counter
+00019a f7b9      	brne	m16u_1		;if not done, loop more
+                 
+                 	//////////////////////////////////
+                 .undef	mc16uL				;multiplicand low byte
+                 .undef	mc16uH				;multiplicand high byte
+                 .undef	mp16uL				;multiplier low byte
+                 .undef	mp16uH				;multiplier high byte
+                 .undef	m16u0				;result byte 0 (LSB)
+                 .undef	m16u1				;result byte 1
+                 .undef	m16u2				;result byte 2
+                 .undef	m16u3				;result byte 3 (MSB)
+                 .undef	mcnt16u				;loop counter
+                 
+00019b 9508      ret	
+                 	
+                 ;______________________________________________________________________
+                 
+                 ;***************************************************************************
+                 ;*
+                 ;* "div32u" - 32/32 Bit Unsigned Division
+                 ;*
+                 ;* Ken Short
+                 ;*
+                 ;* This subroutine divides the two 32-bit numbers 
+                 ;* "dd32u3:dd32u2:dd32u1:dd32u0" (dividend) and "dv32u3:dv32u2:dv32u3:dv32u2"
+                 ;* (divisor). 
+                 ;* The result is placed in "dres32u3:dres32u2:dres32u3:dres32u2" and the
+                 ;* remainder in "drem32u3:drem32u2:drem32u3:drem32u2".
+                 ;*  
+                 ;* Number of words	:
+                 ;* Number of cycles	:655/751 (Min/Max) ATmega16
+                 ;* #Low registers used	:2 (drem16uL,drem16uH)
+                 ;* #High registers used  :5 (dres16uL/dd16uL,dres16uH/dd16uH,dv16uL,dv16uH,
+                 ;*			    dcnt16u)
+                 ;* A $0000 divisor returns $FFFF
+                 ;*
+                 ;***************************************************************************
+                 
+                 ;***** Subroutine Register Variables
+                 
+                 .def	drem32u0=r12    ;remainder
+                 .def	drem32u1=r13
+                 .def	drem32u2=r14
+                 .def	drem32u3=r15
+                 
+                 .def	dres32u0=r18    ;result (quotient)
+                 .def	dres32u1=r19
+                 .def	dres32u2=r20
+                 .def	dres32u3=r21
+                 .undef	dres32u0	    ;result (quotient)
+                 .undef	dres32u1	
+                 .undef	dres32u2	
+                 .undef	dres32u3
+                 .def	dd32u0	=r18    ;dividend
+                 .def	dd32u1	=r19
+                 .def	dd32u2	=r20
+                 .def	dd32u3	=r21
+                 
+                 .def	dv32u0	=r22    ;divisor
+                 .def	dv32u1	=r23
+                 .def	dv32u2	=r24
+                 .def	dv32u3	=r25
+                 
+                 .def	dcnt32u	=r17
+                 
+                 ;***** Code
+                 
+                 div32u:
+00019c e064      	ldi r22, 4
+00019d 2f66      	mov dv32u0, r22			; divide by 10
+                 
+00019e 24cc      	clr	drem32u0	;clear remainder Low byte
+00019f 24dd          clr drem32u1
+0001a0 24ee          clr drem32u2
+0001a1 18ff      	sub	drem32u3,drem32u3;clear remainder High byte and carry
+0001a2 e211      	ldi	dcnt32u,33	;init loop counter
+                 d32u_1:
+0001a3 1f22      	rol	dd32u0		;shift left dividend
+0001a4 1f33      	rol	dd32u1
+0001a5 1f44      	rol	dd32u2    
+0001a6 1f55      	rol	dd32u3
+0001a7 951a      	dec	dcnt32u		;decrement counter
+0001a8 f409      	brne d32u_2		;if done
+0001a9 9508      	ret			;    return
+                 d32u_2:
+0001aa 1ccc      	rol	drem32u0	;shift dividend into remainder
+0001ab 1cdd          rol	drem32u1
+0001ac 1cee          rol	drem32u2
+0001ad 1cff      	rol	drem32u3
+                 
+0001ae 1ac6      	sub	drem32u0,dv32u0	;remainder = remainder - divisor
+0001af 0ad7          sbc	drem32u1,dv32u1
+0001b0 0ae8          sbc	drem32u2,dv32u2
+0001b1 0af9      	sbc	drem32u3,dv32u3	;
+0001b2 f430      	brcc	d32u_3		;   branch if reult is pos or zero
+                 
+0001b3 0ec6      	add	drem32u0,dv32u0	;    if result negative restore remainder
+0001b4 1ed7      	adc	drem32u1,dv32u1
+0001b5 1ee8      	adc	drem32u2,dv32u2
+0001b6 1ef9      	adc	drem32u3,dv32u3
+0001b7 9488      	clc			;    clear carry to be shifted into result
+0001b8 cfea      	rjmp	d32u_1		;else
+0001b9 9408      d32u_3:	sec			;    set carry to be shifted into result
+0001ba cfe8      	rjmp	d32u_1
+                 	/*
+                 .undef	drem32u0	    ;remainder
+                 .undef	drem32u1	
+                 .undef	drem32u2	
+                 .undef	drem32u3	
+                 	
+                 .undef	dd32u0		    ;dividend
+                 .undef	dd32u1		
+                 .undef	dd32u2		
+                 .undef	dd32u3		
+                 .undef	dv32u0		    ;divisor
+                 .undef	dv32u1		
+                 .undef	dv32u2		
+                 .undef	dv32u3		
+                 .undef	dcnt32u	
+                 
+                 */
+                 ;------------DELAY 10 MS--------------------------
+                 ;This subroutine is placed here, if it was required during 
+                 ; the lab. Its not called anywhere in the code. 
+                 ;delays for 10ms 
+                 ;r20 set to 100
+                 ;r21 set to 33
+                 ; combined delay will yield 9999 clock cycles
+                 ;-------------------------------------------------
+                 delay:
+0001bb e644      	ldi r20,100
+                 	outer:
+0001bc e251      		ldi r21, 33
+                 		inner:
+0001bd 955a      			dec r21
+0001be f7f1      			brne inner
+0001bf 954a      			dec r20
+0001c0 f7d9      			brne outer
+0001c1 9508      	ret
+                 ;________________________________________________________________________
+                 
+
+
+RESOURCE USE INFORMATION
+------------------------
+
+Notice:
+The register and instruction counts are symbol table hit counts,
+and hence implicitly used resources are not counted, eg, the
+'lpm' instruction without operands implicitly uses r0 and z,
+none of which are counted.
+
+x,y,z are separate entities in the symbol table and are
+counted separately from r26..r31 here.
+
+.dseg memory usage only counts static data declared with .byte
+
+"ATmega16" register use summary:
+r0 :   0 r1 :   3 r2 :   5 r3 :   3 r4 :   5 r5 :   2 r6 :   1 r7 :   0 
+r8 :   3 r9 :   4 r10:   0 r11:   0 r12:   5 r13:  10 r14:  10 r15:  11 
+r16: 110 r17:  16 r18:  15 r19:  15 r20:  16 r21:   8 r22:  10 r23:   5 
+r24:   7 r25:  13 r26:   7 r27:   0 r28:   4 r29:   4 r30:  12 r31:  11 
+x  :   0 y  :   2 z  :  10 
+Registers used: 29 out of 35 (82.9%)
+
+"ATmega16" instruction use summary:
+.lds  :   0 .sts  :   0 adc   :   4 add   :  11 adiw  :   2 and   :   6 
+andi  :   2 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
+brcc  :   2 brcs  :   0 break :   0 breq  :   5 brge  :   0 brhc  :   0 
+brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
+brne  :  14 brpl  :   0 brsh  :   0 brtc  :   1 brts  :   1 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   5 cbr   :   0 
+clc   :   1 clh   :   0 cli   :   0 cln   :   0 clr   :  26 cls   :   0 
+clt   :   2 clv   :   0 clz   :   0 com   :   3 cp    :   3 cpc   :   0 
+cpi   :   4 cpse  :   1 dec   :  12 eor   :   0 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :  15 inc   :   1 jmp   :   1 
+ld    :   5 ldd   :   0 ldi   :  72 lds   :   0 lpm   :   2 lsl   :   1 
+lsr   :   1 mov   :  16 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
+neg   :   0 nop   :   2 or    :   0 ori   :   0 out   :  18 pop   :  12 
+push  :  15 rcall :  62 ret   :  21 reti  :   1 rjmp  :  14 rol   :  12 
+ror   :   5 sbc   :   3 sbci  :   0 sbi   :   6 sbic  :   0 sbis  :   2 
+sbiw  :   0 sbr   :   0 sbrc  :   2 sbrs  :   2 sec   :   1 seh   :   0 
+sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   2 sev   :   0 
+sez   :   0 sleep :   0 spm   :   0 st    :   5 std   :   0 sts   :   0 
+sub   :   2 subi  :   2 swap  :   2 tst   :   0 wdr   :   0 
+Instructions used: 50 out of 113 (44.2%)
+
+"ATmega16" memory use summary [bytes]:
+Segment   Begin    End      Code   Data   Used    Size   Use%
+---------------------------------------------------------------
+[.cseg] 0x000000 0x000384    824     76    900   16384   5.5%
+[.dseg] 0x000060 0x000090      0     48     48    1024   4.7%
+[.eseg] 0x000000 0x000000      0      0      0     512   0.0%
+
+Assembly complete, 0 errors, 2 warnings

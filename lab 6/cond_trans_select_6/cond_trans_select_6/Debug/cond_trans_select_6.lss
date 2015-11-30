@@ -1,0 +1,140 @@
+
+AVRASM ver. 2.1.52  H:\New folder\cond_trans_select_6\cond_trans_select_6\cond_trans_select_6.asm Wed Oct 15 10:28:14 2014
+
+H:\New folder\cond_trans_select_6\cond_trans_select_6\cond_trans_select_6.asm(20): Including file 'C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.39.1005\avrassembler\Include\m16def.inc'
+                 
+                 
+                  * cond_trans_select.asm
+                  *
+                  ; This program will utilize 2 pbsw, pbsw 1(pc0) will will used 
+                  ; as select and Pbsw2(pc6) will be used as load. two leds will 
+                  ; be attached to PA0 and PA1. PA0 led will be turned on when the 
+                  ; lower nibble dip switch is used, and PA1 led for the other. 
+                  ; select pbsw will alternate between lower and upper dip switch
+                  ; for each press. load will load the input values of the selected
+                  ;	dip switch
+                  ;
+                  ;inputs : dip switch (Port D), PBSW 1 and 2(PC0,PC6).
+                  ;outputs: 7seg display (Port B), led 1 and 2(PA0,PA1)		
+                 
+                  *  Created: 10/9/2014 10:53:35 AM
+                  *   Author: radra_000
+                  */ 
+                 
+                  .list
+                 
+                 reset:
+                 	//initizling the stack pointer
+000000 e50f      	ldi r16, LOW(RAMEND)			;load SPL with low byte of
+000001 bf0d      	out SPL, r16					;RAMEND adress
+000002 e004      	ldi r16, HIGH(RAMEND)			;load SPH with low byte of 
+000003 bf0e      	out SPH, r16					;RAMEND adress
+000004 ef0f      	ldi r16, $FF					;load r16 with 1's and
+000005 bb07      	out ddrb, r16					;make portb as output
+000006 bb0a      	out ddra, r16					;port a as output 
+000007 bb02      	out portd, r16					;turn on pull up resistors in portd
+000008 9aa8      	sbi portc, 0					;turn on pull up resistors in PC0
+000009 9aae      	sbi portc, 6					;turn on pull ups in pc6
+00000a e000      	ldi r16, $00					;load r16 with 0's
+00000b bb01      	out ddrd, r16					;set portd and
+00000c bb04      	out ddrc, r16					;port c as inputs
+00000d e010      	ldi r17, $00					;load r17 with 0's
+00000e e021      	ldi r18, $01					;load r18 with 0's
+00000f e30f      	ldi r16, $3F					;output "-" in 7seg 
+000010 bb08      	out portb, r16					;indicating no input
+000011 e001      	ldi r16, $01
+000012 bb0b      	out porta, r16
+                 main_loop:
+000013 b310      	in r17, pind					;input values of dip switch	
+000014 9998      	sbic pinc, 0					;wait for load button press
+000015 c006      	rjmp LOAD_push					;if not pressed, check the load
+000016 b329      	in r18, pina					;takes in the value of pin a
+                 	//swap r17						;and toggle the first two bits
+000017 e0b3      	ldi r27, $03					;load r27 with 3
+000018 272b      	eor r18, r27					;exor it to get the inverse
+000019 bb2b      	out porta, r18					;turn on the led 1 or 2;
+                 	wait_1:							;wait until the pbsw3 is pressed
+00001a 9b98      	sbis pinc, 0
+00001b cffe      	rjmp wait_1
+                 LOAD_push:
+00001c 999e      	sbic pinc, 6					;check if load button is pressed
+00001d cff5      	rjmp main_loop					;if not repeat the code
+00001e 9bc8      	sbis pina, 0					;skip if pina0 is 1
+00001f 9512      	swap r17						;swap if its 0
+000020 701f      	andi r17, $0F					;set the upper nibbles to 0
+000021 e036      	ldi r19, $06					; load r19 with 6 to check 
+000022 0f31      	add r19, r17					;if the input value is above 9
+000023 f00d      	brhs overflow					;go to overflow if is >9
+000024 c001      	rjmp hex_7seg					;else, display the value
+                 	overflow:
+000025 e019      	ldi r17, $09					;set max value to be 9
+                 hex_7seg:
+                 	//mov r17, r18					;copy r18 to r17
+000026 e0f0      	ldi ZH, HIGH(table*2)
+000027 e5ec      	ldi ZL, LOW(table*2)			;set z to point to start of the table
+000028 e000      	ldi r16, $00					;clear for later use
+000029 0fe1      	add ZL, r17						;add low byte
+00002a 1ff0      	adc ZH, r16						;add in the carry
+00002b 9114      	lpm r17, z						;load bid pattern from table into r18
+                 display:
+00002c bb18      	out PORTB,r17					;output patter for 7 seg display
+00002d cfe5      	rjmp main_loop
+00002e 7940
+00002f 3024
+000030 1219
+000031 7803
+000032 1800      table: .db $40, $79, $24, $30, $19, $12, $03, $78,$0, $18
+
+
+RESOURCE USE INFORMATION
+------------------------
+
+Notice:
+The register and instruction counts are symbol table hit counts,
+and hence implicitly used resources are not counted, eg, the
+'lpm' instruction without operands implicitly uses r0 and z,
+none of which are counted.
+
+x,y,z are separate entities in the symbol table and are
+counted separately from r26..r31 here.
+
+.dseg memory usage only counts static data declared with .byte
+
+"ATmega16" register use summary:
+r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 r5 :   0 r6 :   0 r7 :   0 
+r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 r13:   0 r14:   0 r15:   0 
+r16:  17 r17:   9 r18:   4 r19:   2 r20:   0 r21:   0 r22:   0 r23:   0 
+r24:   0 r25:   0 r26:   0 r27:   2 r28:   0 r29:   0 r30:   2 r31:   2 
+x  :   0 y  :   0 z  :   1 
+Registers used: 8 out of 35 (22.9%)
+
+"ATmega16" instruction use summary:
+.lds  :   0 .sts  :   0 adc   :   1 add   :   2 adiw  :   0 and   :   0 
+andi  :   1 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
+brhs  :   1 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
+brne  :   0 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   0 cbr   :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
+clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
+cpi   :   0 cpse  :   0 dec   :   0 eor   :   1 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   2 inc   :   0 jmp   :   0 
+ld    :   0 ldd   :   0 ldi   :  14 lds   :   0 lpm   :   2 lsl   :   0 
+lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
+neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :  11 pop   :   0 
+push  :   0 rcall :   0 ret   :   0 reti  :   0 rjmp  :   5 rol   :   0 
+ror   :   0 sbc   :   0 sbci  :   0 sbi   :   2 sbic  :   2 sbis  :   2 
+sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
+sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
+sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   0 
+sub   :   0 subi  :   0 swap  :   1 tst   :   0 wdr   :   0 
+Instructions used: 14 out of 113 (12.4%)
+
+"ATmega16" memory use summary [bytes]:
+Segment   Begin    End      Code   Data   Used    Size   Use%
+---------------------------------------------------------------
+[.cseg] 0x000000 0x000066     92     10    102   16384   0.6%
+[.dseg] 0x000060 0x000060      0      0      0    1024   0.0%
+[.eseg] 0x000000 0x000000      0      0      0     512   0.0%
+
+Assembly complete, 0 errors, 0 warnings

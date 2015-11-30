@@ -1,0 +1,188 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.52</VERSION>
+ <DEVICE>"ATmega16"</DEVICE>
+ <WORKING_DIR>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.39.1005\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.39.1005\avrassembler\Include\m16def.inc</FILE>
+  <FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE>
+  <FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\Debug/avm4.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>avm4.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>avm4.map</FILE>
+  <FILE>avm4.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <reset><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>55</LINE></reset>
+  <menu><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>258</LINE></menu>
+  <isr_tc0_display><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>247</LINE></isr_tc0_display>
+  <init_lcd_dog><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>227</LINE></init_lcd_dog>
+  <main><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>89</LINE></main>
+  <run><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>100</LINE></run>
+  <hold><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>118</LINE></hold>
+  <capture1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>138</LINE></capture1>
+  <alarm><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>140</LINE></alarm>
+  <freq_meter1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>136</LINE></freq_meter1>
+  <spi_setup><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>423</LINE></spi_setup>
+  <unpack><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>910</LINE></unpack>
+  <overflow_dis><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>115</LINE></overflow_dis>
+  <run_display><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>621</LINE></run_display>
+  <overflow><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>709</LINE></overflow>
+  <hold_display><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>651</LINE></hold_display>
+  <freq_meter><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>202</LINE></freq_meter>
+  <capture><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>169</LINE></capture>
+  <alarm_display><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>679</LINE></alarm_display>
+  <alarmed><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>163</LINE></alarmed>
+  <delay><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>1038</LINE></delay>
+  <next><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>179</LINE></next>
+  <clear><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>182</LINE></clear>
+  <run_once><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>185</LINE></run_once>
+  <overflow_dis1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>240</LINE></overflow_dis1>
+  <capture_display><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>571</LINE></capture_display>
+  <audio><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>364</LINE></audio>
+  <freq_display><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>726</LINE></freq_display>
+  <start_tc1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>389</LINE></start_tc1>
+  <frequency_meter_3><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>218</LINE></frequency_meter_3>
+  <check_edge><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>224</LINE></check_edge>
+  <finish2><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>235</LINE></finish2>
+  <check_hold><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>265</LINE></check_hold>
+  <audio_offon><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>306</LINE></audio_offon>
+  <menu_loop><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>270</LINE></menu_loop>
+  <switch><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>311</LINE></switch>
+  <menu_check><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>294</LINE></menu_check>
+  <wait_1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>278</LINE></wait_1>
+  <check><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>286</LINE></check>
+  <good><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>290</LINE></good>
+  <main_menu><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>474</LINE></main_menu>
+  <alarm_set><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>319</LINE></alarm_set>
+  <menu_exit><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>297</LINE></menu_exit>
+  <clear1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>315</LINE></clear1>
+  <alarm_select><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>540</LINE></alarm_select>
+  <wait_press><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>322</LINE></wait_press>
+  <done_select><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>332</LINE></done_select>
+  <wait_for_1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>342</LINE></wait_for_1>
+  <audelay_30uS><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>50</LINE></audelay_30uS>
+  <aud30_loop><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>54</LINE></aud30_loop>
+  <audelay_300uS><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>70</LINE></audelay_300uS>
+  <dly_300_loop><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>72</LINE></dly_300_loop>
+  <audelay_1mS><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>92</LINE></audelay_1mS>
+  <dloop111><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>96</LINE></dloop111>
+  <dloop222><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>98</LINE></dloop222>
+  <audelay_2mS><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>120</LINE></audelay_2mS>
+  <dloop11><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>124</LINE></dloop11>
+  <dloop22><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>126</LINE></dloop22>
+  <audelay_10mS><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>149</LINE></audelay_10mS>
+  <audloop1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>153</LINE></audloop1>
+  <audloop2><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>155</LINE></audloop2>
+  <audelay_300mS><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>175</LINE></audelay_300mS>
+  <audelay_300ms_loop><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>178</LINE></audelay_300ms_loop>
+  <send_audio_r17r16><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>227</LINE></send_audio_r17r16>
+  <check_busy><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>228</LINE></check_busy>
+  <check_busyy><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>232</LINE></check_busyy>
+  <reset_pulse><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>236</LINE></reset_pulse>
+  <take_clk_low><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>243</LINE></take_clk_low>
+  <send_r17r16_loop><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>249</LINE></send_r17r16_loop>
+  <out_one><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>255</LINE></out_one>
+  <pulse_clk><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>257</LINE></pulse_clk>
+  <take_clk_data_high><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\audio_playback_WTV20SD_beta.inc</FILE><LINE>265</LINE></take_clk_data_high>
+  <wait_H><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>434</LINE></wait_H>
+  <wait_L><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>439</LINE></wait_L>
+  <display><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>468</LINE></display>
+  <clr_dsp_buffs><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>769</LINE></clr_dsp_buffs>
+  <line1_message1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>532</LINE></line1_message1>
+  <load_msg><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>808</LINE></load_msg>
+  <menu_run><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>493</LINE></menu_run>
+  <menu_hold><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>498</LINE></menu_hold>
+  <menu_capture><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>503</LINE></menu_capture>
+  <menu_alarm><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>513</LINE></menu_alarm>
+  <menu_freq><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>508</LINE></menu_freq>
+  <line2_message_r><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>533</LINE></line2_message_r>
+  <thirdline><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>517</LINE></thirdline>
+  <line2_message_h><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>534</LINE></line2_message_h>
+  <line2_message_c><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>535</LINE></line2_message_c>
+  <line2_message_t><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>537</LINE></line2_message_t>
+  <line2_message_a><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>536</LINE></line2_message_a>
+  <line3_message1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>538</LINE></line3_message1>
+  <update_lcd_dog><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>305</LINE></update_lcd_dog>
+  <line1_message7><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>567</LINE></line1_message7>
+  <line2_message_7><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>568</LINE></line2_message_7>
+  <line3_message7><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>569</LINE></line3_message7>
+  <line1_message><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>598</LINE></line1_message>
+  <line2_message><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>599</LINE></line2_message>
+  <linechange><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>603</LINE></linechange>
+  <line3_message><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>600</LINE></line3_message>
+  <line3_message0><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>618</LINE></line3_message0>
+  <line1_message0><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>616</LINE></line1_message0>
+  <line2_message0><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>617</LINE></line2_message0>
+  <line1_message2><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>645</LINE></line1_message2>
+  <line2_message2><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>646</LINE></line2_message2>
+  <line3_message2><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>647</LINE></line3_message2>
+  <line1_message3><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>675</LINE></line1_message3>
+  <line2_message3><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>676</LINE></line2_message3>
+  <line3_message3><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>677</LINE></line3_message3>
+  <line1_message6><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>705</LINE></line1_message6>
+  <line2_message6><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>706</LINE></line2_message6>
+  <line3_message6><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>707</LINE></line3_message6>
+  <line2_message5><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>723</LINE></line2_message5>
+  <line1_message5><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>722</LINE></line1_message5>
+  <line3_message5><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>724</LINE></line3_message5>
+  <line1_message8><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>750</LINE></line1_message8>
+  <line2_message8><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>751</LINE></line2_message8>
+  <line3_message8><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>752</LINE></line3_message8>
+  <dsp_buff_1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>54</LINE></dsp_buff_1>
+  <dsp_buff_2><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>55</LINE></dsp_buff_2>
+  <dsp_buff_3><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>56</LINE></dsp_buff_3>
+  <delay_30uS><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>75</LINE></delay_30uS>
+  <d30_loop><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>79</LINE></d30_loop>
+  <v_delay><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>106</LINE></v_delay>
+  <delay_40mS><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>125</LINE></delay_40mS>
+  <init_spi_lcd><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>141</LINE></init_spi_lcd>
+  <lcd_spi_transmit_CMD><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>164</LINE></lcd_spi_transmit_CMD>
+  <wait_transmit><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>175</LINE></wait_transmit>
+  <lcd_spi_transmit_DATA><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>196</LINE></lcd_spi_transmit_DATA>
+  <wait_transmit1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>207</LINE></wait_transmit1>
+  <start_dly_40ms><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>231</LINE></start_dly_40ms>
+  <func_set1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>235</LINE></func_set1>
+  <func_set2><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>241</LINE></func_set2>
+  <bias_set><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>247</LINE></bias_set>
+  <power_ctrl><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>255</LINE></power_ctrl>
+  <follower_ctrl><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>261</LINE></follower_ctrl>
+  <contrast_set><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>267</LINE></contrast_set>
+  <display_on><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>272</LINE></display_on>
+  <clr_display><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>278</LINE></clr_display>
+  <entry_mode><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>286</LINE></entry_mode>
+  <wr_line1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>312</LINE></wr_line1>
+  <snd_ddram_addr><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>315</LINE></snd_ddram_addr>
+  <snd_buff_1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>319</LINE></snd_buff_1>
+  <init_for_buff_2><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>328</LINE></init_for_buff_2>
+  <wr_line2><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>331</LINE></wr_line2>
+  <snd_ddram_addr2><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>334</LINE></snd_ddram_addr2>
+  <snd_buff_2><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>338</LINE></snd_buff_2>
+  <init_for_buff_3><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>347</LINE></init_for_buff_3>
+  <wr_line3><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>349</LINE></wr_line3>
+  <snd_ddram_addr3><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>352</LINE></snd_ddram_addr3>
+  <snd_buff_3><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\lcd_dog_asm_driver_m16A.inc</FILE><LINE>358</LINE></snd_buff_3>
+  <store_bytes><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>776</LINE></store_bytes>
+  <get_msg_byte><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>830</LINE></get_msg_byte>
+  <digit_load><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>850</LINE></digit_load>
+  <msg_loaded><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>892</LINE></msg_loaded>
+  <get_dis_freq><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>887</LINE></get_dis_freq>
+  <disp_volts><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>883</LINE></disp_volts>
+  <bin2BCD16><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>986</LINE></bin2BCD16>
+  <bBCDx_1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>995</LINE></bBCDx_1>
+  <bBCDx_2><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>1005</LINE></bBCDx_2>
+  <bBCDx_3><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>1007</LINE></bBCDx_3>
+  <outer><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>1042</LINE></outer>
+  <inner><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab11\avm4\avm4\avm4.asm</FILE><LINE>1044</LINE></inner>
+ </LABELS>
+</ASSEMBLER_INFO>

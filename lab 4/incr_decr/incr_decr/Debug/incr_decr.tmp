@@ -1,0 +1,38 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.52</VERSION>
+ <DEVICE>"ATmega16"</DEVICE>
+ <WORKING_DIR>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 4\incr_decr\incr_decr\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.39.1005\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 4\incr_decr\incr_decr\incr_decr.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.39.1005\avrassembler\Include\m16def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 4\incr_decr\incr_decr\Debug/incr_decr.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>incr_decr.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>incr_decr.map</FILE>
+  <FILE>incr_decr.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <reset><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 4\incr_decr\incr_decr\incr_decr.asm</FILE><LINE>23</LINE></reset>
+  <main_loop><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 4\incr_decr\incr_decr\incr_decr.asm</FILE><LINE>46</LINE></main_loop>
+  <dec_check><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 4\incr_decr\incr_decr\incr_decr.asm</FILE><LINE>70</LINE></dec_check>
+  <delay1><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 4\incr_decr\incr_decr\incr_decr.asm</FILE><LINE>55</LINE></delay1>
+  <overflow><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 4\incr_decr\incr_decr\incr_decr.asm</FILE><LINE>107</LINE></overflow>
+  <bcd_7seg><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 4\incr_decr\incr_decr\incr_decr.asm</FILE><LINE>110</LINE></bcd_7seg>
+  <reset_check><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 4\incr_decr\incr_decr\incr_decr.asm</FILE><LINE>89</LINE></reset_check>
+  <delay2><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 4\incr_decr\incr_decr\incr_decr.asm</FILE><LINE>75</LINE></delay2>
+  <delay3><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 4\incr_decr\incr_decr\incr_decr.asm</FILE><LINE>94</LINE></delay3>
+  <table><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 4\incr_decr\incr_decr\incr_decr.asm</FILE><LINE>127</LINE></table>
+  <display><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 4\incr_decr\incr_decr\incr_decr.asm</FILE><LINE>119</LINE></display>
+  <delay4><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 4\incr_decr\incr_decr\incr_decr.asm</FILE><LINE>133</LINE></delay4>
+  <delay5><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 4\incr_decr\incr_decr\incr_decr.asm</FILE><LINE>148</LINE></delay5>
+ </LABELS>
+</ASSEMBLER_INFO>

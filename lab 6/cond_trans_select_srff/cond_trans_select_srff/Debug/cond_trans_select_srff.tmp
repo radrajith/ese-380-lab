@@ -1,0 +1,35 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.52</VERSION>
+ <DEVICE>"ATmega16"</DEVICE>
+ <WORKING_DIR>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 6\cond_trans_select_srff\cond_trans_select_srff\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.39.1005\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 6\cond_trans_select_srff\cond_trans_select_srff\cond_trans_select_srff.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.39.1005\avrassembler\Include\m16def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 6\cond_trans_select_srff\cond_trans_select_srff\Debug/cond_trans_select_srff.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>cond_trans_select_srff.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>cond_trans_select_srff.map</FILE>
+  <FILE>cond_trans_select_srff.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <reset><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 6\cond_trans_select_srff\cond_trans_select_srff\cond_trans_select_srff.asm</FILE><LINE>28</LINE></reset>
+  <main_loop><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 6\cond_trans_select_srff\cond_trans_select_srff\cond_trans_select_srff.asm</FILE><LINE>51</LINE></main_loop>
+  <LOAD_push><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 6\cond_trans_select_srff\cond_trans_select_srff\cond_trans_select_srff.asm</FILE><LINE>66</LINE></LOAD_push>
+  <delay><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 6\cond_trans_select_srff\cond_trans_select_srff\cond_trans_select_srff.asm</FILE><LINE>92</LINE></delay>
+  <clear><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 6\cond_trans_select_srff\cond_trans_select_srff\cond_trans_select_srff.asm</FILE><LINE>63</LINE></clear>
+  <hex_7seg><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 6\cond_trans_select_srff\cond_trans_select_srff\cond_trans_select_srff.asm</FILE><LINE>70</LINE></hex_7seg>
+  <table><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 6\cond_trans_select_srff\cond_trans_select_srff\cond_trans_select_srff.asm</FILE><LINE>81</LINE></table>
+  <display><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 6\cond_trans_select_srff\cond_trans_select_srff\cond_trans_select_srff.asm</FILE><LINE>78</LINE></display>
+  <outer><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 6\cond_trans_select_srff\cond_trans_select_srff\cond_trans_select_srff.asm</FILE><LINE>96</LINE></outer>
+  <inner><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 6\cond_trans_select_srff\cond_trans_select_srff\cond_trans_select_srff.asm</FILE><LINE>98</LINE></inner>
+ </LABELS>
+</ASSEMBLER_INFO>

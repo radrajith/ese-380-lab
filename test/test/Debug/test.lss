@@ -1,0 +1,240 @@
+
+AVRASM ver. 2.1.52  C:\Users\radra_000\Desktop\Box Sync\college sophomore fall 2014 (radrajith@gmail.com)\fall 2014 notes and files\ese 380 lab\test\test\test.asm Sun Dec 14 22:26:01 2014
+
+C:\Users\radra_000\Desktop\Box Sync\college sophomore fall 2014 (radrajith@gmail.com)\fall 2014 notes and files\ese 380 lab\test\test\test.asm(83): Including file 'C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.39.1005\avrassembler\Include\m16def.inc'
+                 
+                 
+                 ;input = r17:r16
+                 /*
+                 .def pstatel = r24		;low byte of presnt state
+                 .def pstateh = r25		;high byte of present state
+                 
+                 .equ i0 = $00
+                 .equ i1	= $01
+                 .equ i2 = $02
+                 .equ i3 = $03
+                 .equ eol = $ff
+                 
+                 
+                 state_table:
+                 	;keycode	NxtSt	Task
+                 s0:	.dw	i1,		s1,		task1
+                 	.dw	i3,		s2,		task1
+                 	.dw	eol,	s0,		task0
+                 
+                 s1:	.dw	i0,		s0,		task3
+                 	.dw	i2,		s1,		task1
+                 	.dw	eol,	s0,		task0
+                 
+                 s2:	.dw	i0,		s0,		task3
+                 	.dw	i2,		s2,		task2
+                 	.dw	eol,	s0,		task0
+                 
+                 fsm:
+                 	mov ZL, pstatel		;ld z-ptr with pstate address*2
+                 	add ZL, ZL			;(as z is used as a byte ptr w/LPM)
+                 	mov ZH, pstateh
+                 	adc ZH, ZH
+                 
+                 	;search for input keyword match in present state subtable
+                 	; of the state table
+                 
+                 state:
+                 	lpm	r18, Z+	;get keycode low byte from state table
+                 	cp r18, r16	;compare table entry with low byte
+                 	brne check_eol	; of input keycode
+                 
+                 	;if bytes match, high byes must be checked
+                 
+                 lowmatch:
+                 	lpm r19, Z+	;get highbyte of keycode
+                 	cp r19, r17	; from state table
+                 	breq match	;if match, z pointing to next state
+                 	sbiw ZH:ZL, $01	;else adjust z-ptr
+                 
+                 	;check for table keycode for eol value
+                 check_eol:
+                 	cpi r18, low(eol)	;cp low byte of table entry
+                 	breq lowmatch_eol	; with low byte of eol
+                 	adiw ZH:ZL, $01		;no match fo low bytes, adjust z-ptr
+                 	rjmp nomatch
+                 
+                 	;low byte of osmbol matches eol, high bytes must be checked
+                 lowmatch_eol:
+                 	lpm r18, z+		;get high byte of keycode from table
+                 	cpi r19, HIGH(eol)	;compare high byte of table entry
+                 	breq match
+                 nomatch:
+                 	adiw ZL, $04		;adjust zptr to nexyt row of the state table and
+                 	rjmp search			; continue searching
+                 	
+                 	;a match on input value to keycode has been found,
+                 	;the next word in the rowist he next state adress,
+                 	; the word after that is the taskk subroutine's address
+                 match:
+                 	lpm pstatel, z+		;copy next state address
+                 	lpm pstateh, z+		; to present state (r25:r24);
+                 	lpm r20, z+			;get task/subr addr from the state table
+                 	lpm r21, z	
+                 	mov ZL, r20
+                 	mov ZH, r21
+                 	icall				;zptr is now used as a word ptr
+                 	ret
+                 
+                 	*/
+                 
+                 .list
+                 
+                 .equ stacklength = 32
+                 
+                 .dseg
+                 
+000060           myspl: .byte 1 ;user stack pointer low
+                 
+000061           mysph: .byte 1 ;user stack pointer high
+                 
+000062           mystack: .byte stacklength ;user stack
+                 
+                 .cseg
+                 
+                 reset:
+                 
+000000 c014       rjmp start
+                 
+                 ;push subroutine - byte to be pushed must be in r16
+                 
+                 mypushdown:
+                 
+000001 91a0 0060  lds XL, myspl
+                 
+000003 91b0 0061  lds XH, mysph
+                 
+000005 930d       st X+, r16
+                 
+000006 93a0 0060  sts myspl, XL
+                  //mov r21 , XL 
+                 
+000008 93b0 0061  sts mysph, XH
+                 // MOV R22, XH
+                 
+00000a 9508       ret
+                 
+                 ;pop subroutine - byte poped is returned in r16
+                 
+                 
+                 mypopup:
+                 
+00000b 91a0 0060  lds XL, myspl
+                 
+00000d 91b0 0061  lds XH, mysph
+                 
+00000f 910e       ld r16, -X
+                 
+000010 93a0 0060  sts myspl, XL
+                 
+000012 93b0 0061  sts mysph, XH
+                 
+000014 9508       ret
+                 
+                  
+                 
+                 ;program to test mypush and pop mypop subroutines
+                 
+                 start:
+                 
+000015 e50f       ldi r16, LOW(RAMEND) ;load stack pointer
+                 
+000016 bf0d       out SPL, r16
+                 
+000017 e004       ldi r16, HIGH(RAMEND)
+                 
+000018 bf0e       out SPH, r16
+                 
+000019 e602       ldi r16, LOW(mystack) ;load user stack pointer
+                 
+00001a 9300 0060  sts myspl, r16
+                 
+00001c e000       ldi r16, HIGH(mystack)
+                 
+00001d 9300 0061  sts mysph, r16
+                 
+                 main_loop:
+                 
+00001f e000       ldi r16, $00 ;initailize data to be pushed on user stack
+                 
+000020 e220       ldi r18, stacklength ;loop control variable for pushes and pops
+                 
+                 pushloop:
+                 
+000021 940e 0001  call mypushdown ;push a byte on user stack
+                 
+000023 9503       inc r16 ;increment data value
+                 
+000024 952a       dec r18 ;decrement loop counter
+                 
+000025 f7d9       brne pushloop ;branch is user stack not full
+                 
+000026 e220       ldi r18, stacklength
+                 
+                 poploop:
+                 
+000027 940e 000b  call mypopup ;pop a byte from user stack
+                 
+000029 952a       dec r18 ;decrement loop counter
+                 
+00002a f7e1       brne poploop ;branch if user stack not empty
+                 
+
+
+RESOURCE USE INFORMATION
+------------------------
+
+Notice:
+The register and instruction counts are symbol table hit counts,
+and hence implicitly used resources are not counted, eg, the
+'lpm' instruction without operands implicitly uses r0 and z,
+none of which are counted.
+
+x,y,z are separate entities in the symbol table and are
+counted separately from r26..r31 here.
+
+.dseg memory usage only counts static data declared with .byte
+
+"ATmega16" register use summary:
+r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 r5 :   0 r6 :   0 r7 :   0 
+r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 r13:   0 r14:   0 r15:   0 
+r16:  12 r17:   0 r18:   4 r19:   0 r20:   0 r21:   0 r22:   0 r23:   0 
+r24:   0 r25:   0 r26:   4 r27:   4 r28:   0 r29:   0 r30:   0 r31:   0 
+x  :   2 y  :   0 z  :   0 
+Registers used: 5 out of 35 (14.3%)
+
+"ATmega16" instruction use summary:
+.lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
+andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
+brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
+brne  :   2 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   2 cbi   :   0 cbr   :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
+clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
+cpi   :   0 cpse  :   0 dec   :   2 eor   :   0 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   1 jmp   :   0 
+ld    :   1 ldd   :   0 ldi   :   7 lds   :   4 lpm   :   0 lsl   :   0 
+lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
+neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   2 pop   :   0 
+push  :   0 rcall :   0 ret   :   2 reti  :   0 rjmp  :   2 rol   :   0 
+ror   :   0 sbc   :   0 sbci  :   0 sbi   :   0 sbic  :   0 sbis  :   0 
+sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
+sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
+sez   :   0 sleep :   0 spm   :   0 st    :   1 std   :   0 sts   :   6 
+sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
+Instructions used: 12 out of 113 (10.6%)
+
+"ATmega16" memory use summary [bytes]:
+Segment   Begin    End      Code   Data   Used    Size   Use%
+---------------------------------------------------------------
+[.cseg] 0x000000 0x000058     88      0     88   16384   0.5%
+[.dseg] 0x000060 0x000082      0     34     34    1024   3.3%
+[.eseg] 0x000000 0x000000      0      0      0     512   0.0%
+
+Assembly complete, 0 errors, 0 warnings

@@ -1,0 +1,27 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.52</VERSION>
+ <DEVICE>"ATmega16"</DEVICE>
+ <WORKING_DIR>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 2\prelab2_inout\prelab2_inout\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.39.1005\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 2\prelab2_inout\prelab2_inout\prelab2_inout.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.39.1005\avrassembler\Include\m16def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 2\prelab2_inout\prelab2_inout\Debug/prelab2_inout.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>prelab2_inout.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>prelab2_inout.map</FILE>
+  <FILE>prelab2_inout.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <reset><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 2\prelab2_inout\prelab2_inout\prelab2_inout.asm</FILE><LINE>25</LINE></reset>
+  <again><FILE>C:\Users\radra_000\Box Sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 2\prelab2_inout\prelab2_inout\prelab2_inout.asm</FILE><LINE>32</LINE></again>
+ </LABELS>
+</ASSEMBLER_INFO>

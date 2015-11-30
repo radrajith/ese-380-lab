@@ -1,0 +1,84 @@
+(ExpressProject "Design2"
+  (ProjectVersion "19981106")
+  (ProjectType "PCB")
+  (Folder "Design Resources"
+    (Folder "Library")
+    (NoModify)
+    (File ".\lab 0.dsn"
+      (Type "Schematic Design"))
+    (BuildFileAddedOrDeleted "x")
+    (CompileFileAddedOrDeleted "x")
+    (Board_sim_option "VHDL_flow"))
+  (Folder "Outputs")
+  (Folder "Referenced Projects")
+  (PartMRUSelector
+    (VCC
+      (LibraryName "C:\ORCAD\ORCAD_16.6_LITE\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
+      (DeviceIndex "0"))
+    (RESISTOR
+      (FullPartName "RESISTOR.Normal")
+      (LibraryName
+         "C:\ORCAD\ORCAD_16.6_LITE\TOOLS\CAPTURE\LIBRARY\DISCRETE.OLB")
+      (DeviceIndex "0"))
+    (2N3906/TO
+      (FullPartName "2N3906/TO.Normal")
+      (LibraryName
+         "C:\ORCAD\ORCAD_16.6_LITE\TOOLS\CAPTURE\LIBRARY\TRANSISTOR.OLB")
+      (DeviceIndex "0"))
+    (2N3906
+      (FullPartName "2N3906.Normal")
+      (LibraryName
+         "C:\ORCAD\ORCAD_16.6_LITE\TOOLS\CAPTURE\LIBRARY\TRANSISTOR.OLB")
+      (DeviceIndex "0"))
+    (GND_SIGNAL
+      (LibraryName "C:\ORCAD\ORCAD_16.6_LITE\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
+      (DeviceIndex "0"))
+    (LM34D/TO
+      (FullPartName "LM34D/TO.Normal")
+      (LibraryName
+         "C:\USERS\ROHIT\DOWNLOADS\ESE380--CUSTOMLIBRARY--UPDATED--2014.OLB")
+      (DeviceIndex "0"))
+    (7SEG2-CA
+      (FullPartName "7SEG2-CA.Normal")
+      (LibraryName
+         "C:\USERS\ROHIT\DOWNLOADS\ESE380--CUSTOMLIBRARY--UPDATED--2014.OLB")
+      (DeviceIndex "0"))
+    ("RESISTOR DIP 8"
+      (FullPartName "RESISTOR DIP 8.Normal")
+      (LibraryName
+         "C:\ORCAD\ORCAD_16.6_LITE\TOOLS\CAPTURE\LIBRARY\DISCRETE.OLB")
+      (DeviceIndex "0"))
+    (74LS47
+      (FullPartName "74LS47.Normal")
+      (LibraryName
+         "C:\ORCAD\ORCAD_16.6_LITE\TOOLS\CAPTURE\LIBRARY\MUXDECODER.OLB")
+      (DeviceIndex "0"))
+    (ATMega16-DIP40-Updated
+      (FullPartName "ATMega16-DIP40-Updated.Normal")
+      (LibraryName "C:\USERS\ROHIT\DOWNLOADS\AVR--LIBRARY--UPDATED--2014A.OLB")
+      (DeviceIndex "0")))
+  (LastUsedLibraryBrowseDirectory "C:\Users\rohit\Downloads")
+  (GlobalState
+    (FileView
+      (Path "Design Resources")
+      (Path "Design Resources" ".\lab 0.dsn")
+      (Path "Design Resources" ".\lab 0.dsn" "SCHEMATIC1")
+      (Select "Referenced Projects"))
+    (HierarchyView)
+    (Doc
+      (Type "COrCapturePMDoc")
+      (Frame
+        (Placement "44 2 3 -1 -1 -8 -31 0 200 0 421"))
+      (Tab 0))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -31 78 1634 78 431")
+        (Scroll "-230 0")
+        (Zoom "108")
+        (Occurrence "/"))
+      (Path
+         "C:\USERS\ROHIT\BOX SYNC\COLLEGE SOPHOMORE FALL 2014\FALL 2014 NOTES AND FILES\ESE 380 LAB\LAB 0.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "PAGE1")))
+  (MPSSessionName "rohit"))

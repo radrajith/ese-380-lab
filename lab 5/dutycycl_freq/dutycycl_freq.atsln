@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{18226A42-8477-4023-8AD2-40C49DA407C9}") = "dutycycl_freq", "dutycycl_freq\dutycycl_freq.asmproj", "{35487233-F4A5-4D3D-A548-3396D3DB317A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35487233-F4A5-4D3D-A548-3396D3DB317A}.Debug|AVR.ActiveCfg = Debug|AVR
+		{35487233-F4A5-4D3D-A548-3396D3DB317A}.Debug|AVR.Build.0 = Debug|AVR
+		{35487233-F4A5-4D3D-A548-3396D3DB317A}.Release|AVR.ActiveCfg = Release|AVR
+		{35487233-F4A5-4D3D-A548-3396D3DB317A}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,40 @@
+(ExpressProject ""
+  (ProjectVersion "19981106")
+  (ProjectType "PCB")
+  (Folder "Design Resources"
+    (Folder "Library")
+    (File ".\design5.dsn"
+      (Type "Schematic Design"))
+    (BuildFileAddedOrDeleted "x")
+    (CompileFileAddedOrDeleted "x")
+    (NoModify)
+    (Board_sim_option "VHDL_flow"))
+  (Folder "Outputs")
+  (Folder "Referenced Projects")
+  (PartMRUSelector)
+  (GlobalState
+    (FileView
+      (Path "Design Resources")
+      (Path "Design Resources"
+         "c:\users\radra_000\box sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 5\design5.dsn")
+      (Path "Design Resources"
+         "c:\users\radra_000\box sync\college sophomore fall 2014\fall 2014 notes and files\ese 380 lab\lab 5\design5.dsn"
+         "SCHEMATIC1"))
+    (HierarchyView)
+    (Doc
+      (Type "COrCapturePMDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -31 0 200 0 327"))
+      (Tab 0))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -31 52 1160 52 418")
+        (Scroll "-45 0")
+        (Zoom "100")
+        (Occurrence "/"))
+      (Path
+         "C:\USERS\RADRA_000\BOX SYNC\COLLEGE SOPHOMORE FALL 2014\FALL 2014 NOTES AND FILES\ESE 380 LAB\LAB 5\DESIGN5.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "PAGE1")))
+  (MPSSessionName "radra_000"))

@@ -1,0 +1,142 @@
+
+AVRASM ver. 2.1.52  H:\New folder\lab03_sws_tbl\lab03_sws_tbl\lab03_sws_tbl.asm Wed Sep 24 10:51:35 2014
+
+H:\New folder\lab03_sws_tbl\lab03_sws_tbl\lab03_sws_tbl.asm(26): Including file 'C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR Assembler\Native\2.1.39.1005\avrassembler\Include\m16def.inc'
+                 
+                 
+                  *---------------------------------------------------------------
+                  * prelab3.4_inout.asm
+                  *
+                  ; This program will output the Number in the 7 segment display(MAN72A)
+                  ; after reading the number of switches in on position. It will utilize
+                  ; the built in pull resistos in port D. 
+                  ; reset - loading all ports, will be used everytime chip is restarted
+                  ; main_loop - sets the loop counter to zero(r18), reads the value of switch(r16)
+                  ; next_bit - shift msb(r16) to left,  keeps count of loops.  
+                  
+                  *
+                  * Inputs used: PD0 to PD7 (DIP-8 switch)
+                  * Outputs used: PB0 to PB7 (7 segment display, active low)
+                  *
+                  * assumes: nothing
+                  * alters: r16, SREG
+                  *  
+                  * Author: Rajith Radhakrishnan (109061463) , Raymond Ng(109223276)
+                  * ESE 380 L01, Bench 6
+                  * Version 1.0
+                  */ 
+                 
+                 
+                  .list
+                 
+                  reset:
+                 	;configure I/O ports(1 pass only!)
+                 	
+                 	;configure port B as an output port
+000000 ef0f      	ldi r16, $FF				;initizalize register 16, with all 1's
+000001 bb07      	out DDRB, r16				;set all bits in PORTB to outputs
+                 	
+                 	;configure port D as an input port
+000002 e000      	ldi r16, $00				;initialize and load register 16 with all 0's
+000003 bb01      	out DDRD, r16				;set all bits in PORTD to inputs
+000004 ef0f      	ldi r16, $FF				;initialize and load register 16 with all 1's
+000005 bb02      	out portD, r16				;enable portd pins as outputs, this activates the pull up resistor
+                 
+                 	;code to count switches in 1's position and set up a loop counter 
+                 
+                 main_loop:
+000006 b300      	in r16, PIND				;input switch value stored in Pin D to r16
+000007 e018      	ldi r17,8					;loop parameter for inner loop
+000008 e020      	ldi r18, $00				;initialize r18 with 0, which is the initial value 
+                 								;to be outputed on the bargraph
+                 
+                 	;shifts msb to left. branchesto dec_bitcounter if 0, add one to r18 if 1.
+                 
+                 next_bit:
+000009 0f00      	lsl r16						;shift msb of r16 into carry
+00000a f408      	brcc dec_bitcounter			;branch if carry clear/ when the value is 0
+00000b 9523      	inc r18						;when the value is 1, increment the counter value
+                 	
+                 	;when msb of r16 is 0, the value stored in r17 is reduced by 1, this happens for 8 times
+                 	;after r17 is 0, it goes to bcd_7seg
+                 
+                 dec_bitcounter:
+00000c 951a      	dec r17						;decrement the valuestored in r17
+00000d f7d9      	brne next_bit				;branch if result after dec is not zero
+                 
+                 	
+                 bcd_7seg:
+00000e e0f0      	ldi ZH, high (table*2)		;set z to point to start of the table
+00000f e2ec      	ldi ZL, low	 (table*2)		
+000010 e000      	ldi r16, $00				;Clear for later use
+000011 0fe2      	add ZL, r18					;add zlow with the bits of r18
+000012 1ff0      	adc ZH, r16					;add in the Carry
+000013 9124      	lpm r18, Z					;load bit battern from table into r18
+                 
+                 display:
+000014 bb28      	out PORTB, r18				;output pattern for 7seg diplay
+000015 cff0      	rjmp main_loop				;start the process again
+                 
+                 	;table of 7 segment bit patterns to display digits 0-8
+                 	;for each hex number listed, the number of 1(because of active low)
+                 	;in the hex number indicate the number of leds thats goint to be off.
+                 
+000016 7940
+000017 3024
+000018 1219
+000019 7803
+00001a 0000      table: .db $40,$79,$24,$30,$19,$12,$03,$78,$0,$0
+
+
+RESOURCE USE INFORMATION
+------------------------
+
+Notice:
+The register and instruction counts are symbol table hit counts,
+and hence implicitly used resources are not counted, eg, the
+'lpm' instruction without operands implicitly uses r0 and z,
+none of which are counted.
+
+x,y,z are separate entities in the symbol table and are
+counted separately from r26..r31 here.
+
+.dseg memory usage only counts static data declared with .byte
+
+"ATmega16" register use summary:
+r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 r5 :   0 r6 :   0 r7 :   0 
+r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 r13:   0 r14:   0 r15:   0 
+r16:  10 r17:   2 r18:   5 r19:   0 r20:   0 r21:   0 r22:   0 r23:   0 
+r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 r29:   0 r30:   2 r31:   2 
+x  :   0 y  :   0 z  :   1 
+Registers used: 6 out of 35 (17.1%)
+
+"ATmega16" instruction use summary:
+.lds  :   0 .sts  :   0 adc   :   1 add   :   1 adiw  :   0 and   :   0 
+andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
+brcc  :   1 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
+brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
+brne  :   1 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   0 cbr   :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
+clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
+cpi   :   0 cpse  :   0 dec   :   1 eor   :   0 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   1 inc   :   1 jmp   :   0 
+ld    :   0 ldd   :   0 ldi   :   8 lds   :   0 lpm   :   2 lsl   :   1 
+lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
+neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   4 pop   :   0 
+push  :   0 rcall :   0 ret   :   0 reti  :   0 rjmp  :   1 rol   :   0 
+ror   :   0 sbc   :   0 sbci  :   0 sbi   :   0 sbic  :   0 sbis  :   0 
+sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
+sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
+sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   0 
+sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
+Instructions used: 12 out of 113 (10.6%)
+
+"ATmega16" memory use summary [bytes]:
+Segment   Begin    End      Code   Data   Used    Size   Use%
+---------------------------------------------------------------
+[.cseg] 0x000000 0x000036     44     10     54   16384   0.3%
+[.dseg] 0x000060 0x000060      0      0      0    1024   0.0%
+[.eseg] 0x000000 0x000000      0      0      0     512   0.0%
+
+Assembly complete, 0 errors, 0 warnings
